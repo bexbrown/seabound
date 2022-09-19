@@ -1,0 +1,7 @@
+@use '../../styles/partials/colors' as *;
+
+.gameover {
+    &__play {
+        color: $color-text;
+    }
+}

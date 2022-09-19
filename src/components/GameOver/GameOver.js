@@ -1,12 +1,12 @@
 import './GameOver.scss';
-// import PlayAgain from '../PlayAgain/PlayAgain';
-import HighScore from '../HighScore/HighScore';
+import PlayAgain from '../PlayAgain/PlayAgain';
+// import HighScore from '../HighScore/HighScore';
 
 function GameOver() {
     return (
         <div className='gameover'>
-            {/* <PlayAgain /> */}
-            <HighScore />
+            <PlayAgain />
+            {/* <HighScore /> */}
 
         </div>
     )

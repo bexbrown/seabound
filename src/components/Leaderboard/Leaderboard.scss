@@ -3,11 +3,14 @@
 .leaderboard {
     margin: 1.5rem;
 
+
     &__container {
-        padding: 0.5rem;
         width: 17rem;
         height: 17rem;
         margin: 0 auto;
+        border: 2px solid $color-jellyfish;
+        background-color: $color-card;
+        color: $color-bg;
     }
 
     &__row {
@@ -15,18 +18,34 @@
         flex-direction: row;
         justify-content: space-between;
         text-align: center;
+        padding: 0 0.5rem;
+        border-bottom: 2px solid $color-jellyfish;
+        text-transform: uppercase;
+        height: 22.3px;
+    }
+
+    &__row--titles {
+        background-color: $color-turtle;
+        color: $color-bg;
+        height: 47.05px;
     }
 
     &__rank {
         flex-basis: 20%;
+        border-right: 2px solid $color-jellyfish;
     }
 
     &__score {
         flex-basis: 20%;
+        border-right: 2px solid $color-jellyfish;
     }
 
     &__name {
         flex-basis: 60%;
+    }
+
+    &__heading {
+        border-right: none;
     }
 
 }

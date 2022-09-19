@@ -1,9 +1,9 @@
 import './GameBoard.scss';
 import styled from 'styled-components';
-import TurtleSvg from '../../assets/images/Turtle.svg';
+import TurtleImage from '../../assets/images/Turtle.svg';
 import { useState, useEffect, useCallback } from 'react';
-import JellyfishSvg from '../../assets/images/Jellyfish.svg';
-import BagSvg from '../../assets/images/Bag.svg';
+import JellyfishImage from '../../assets/images/Jellyfish.svg';
+import BagImage from '../../assets/images/Bag.png';
 import GameStart from '../GameStart/GameStart';
 import GamePause from '../GamePause/GamePause';
 import GameOver from '../GameOver/GameOver';
@@ -24,7 +24,7 @@ function GameBoard() {
     const [gameOver, setGameOver] = useState(false);
 
     const Turtle = styled.div`
-    background-image: url(${TurtleSvg});
+    background-image: url(${TurtleImage});
     background-repeat: no-repeat;
     transform: rotate(${turtleDirection}deg);
     height: 1rem;
@@ -35,7 +35,7 @@ function GameBoard() {
     `;
 
     const Jellyfish = styled.div`
-    background-image: url(${JellyfishSvg});
+    background-image: url(${JellyfishImage});
     background-repeat: no-repeat;
     height: 1rem;
     width: 1rem;
@@ -44,9 +44,10 @@ function GameBoard() {
     top: ${jellyfishPosition[1]}rem; 
     `;
 
-    const Bag = styled.img`
-    // background-image: url(${BagSvg});
-    // background-repeat: no-repeat;
+    const Bag = styled.div`
+    background-image: url(${BagImage});
+    background-repeat: no-repeat;
+    background-size: contain;
     height: 1rem;
     width: 1rem;
     position: absolute;
@@ -149,10 +150,11 @@ function GameBoard() {
             {(gameActive && !gameOver && !gamePause) && <div className='gameboard__board'>
                 <Turtle />
                 <Jellyfish />
+                <Bag />
                 {/* {createBags} */}
-                {bagPositions.map((bag) => {
-                    return <Bag key={uuid()} src={BagSvg} />
-                })}
+                {/* {bagPositions.map((bag) => {
+                    return <Bag key={uuid()} />
+                })} */}
 
                 {/* <Bag src={BagSvg} /> */}
             </div>}

@@ -4,7 +4,7 @@ function Leaderboard() {
     return (
         <main className='leaderboard'>
             <div className='leaderboard__container'>
-                <div className='leaderboard__row'>
+                <div className='leaderboard__row leaderboard__row--titles'>
                     <h2 className='leaderboard__heading leaderboard__rank'>Rank</h2>
                     <h2 className='leaderboard__heading leaderboard__score'>Score</h2>
                     <h2 className='leaderboard__heading leaderboard__name'>Name</h2>

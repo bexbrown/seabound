@@ -18,5 +18,11 @@
     &__title {
         text-transform: uppercase;
         text-align: center;
+        text-decoration: underline;
+    }
+
+    &__play {
+        color: $color-text;
+        text-align: center;
     }
 }
