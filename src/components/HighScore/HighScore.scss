@@ -1,0 +1,32 @@
+@use '../../styles/partials/fonts' as *;
+@use '../../styles/partials/colors' as *;
+
+.highscore {
+
+
+
+    &__title {
+        margin-top: 0;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__input {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        outline: none;
+        border: none;
+        font-family: $font-stack;
+    }
+
+    &__button {
+        padding: 0.5rem;
+        border: none;
+        text-transform: uppercase;
+        font-family: $font-stack;
+
+    }
+}

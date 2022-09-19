@@ -1,0 +1,17 @@
+@use './styles/partials/fonts' as *;
+@use './styles/partials/typography' as *;
+@use './styles/partials/colors' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+
+}
+
+body {
+  background-color: $color-bg;
+  color: $color-text;
+  width: 100%;
+  font-family: $font-stack;
+}

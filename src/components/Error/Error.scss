@@ -1,0 +1,14 @@
+.error {
+    margin: 1.5rem;
+
+    &__container {
+        background-color: wheat;
+        height: 17rem;
+        width: 17rem;
+        padding: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}

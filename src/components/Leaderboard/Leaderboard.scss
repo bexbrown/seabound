@@ -1,0 +1,32 @@
+@use '../../styles/partials/colors' as *;
+
+.leaderboard {
+    margin: 1.5rem;
+
+    &__container {
+        padding: 0.5rem;
+        width: 17rem;
+        height: 17rem;
+        margin: 0 auto;
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+    }
+
+    &__rank {
+        flex-basis: 20%;
+    }
+
+    &__score {
+        flex-basis: 20%;
+    }
+
+    &__name {
+        flex-basis: 60%;
+    }
+
+}

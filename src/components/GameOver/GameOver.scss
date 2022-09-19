@@ -1,0 +1,13 @@
+@use '../../styles/partials/colors' as *;
+
+.gameover {
+    width: 17rem;
+    height: 17rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-card;
+    border: 1px solid $color-text;
+}

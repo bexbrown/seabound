@@ -1,0 +1,22 @@
+@use '../../styles/partials/colors' as *;
+
+.gamestart {
+
+    width: 17rem;
+    height: 17rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-card;
+    border: 1px solid $color-text;
+
+
+
+    &__title {
+        text-transform: uppercase;
+        text-align: center;
+    }
+}

@@ -1,0 +1,27 @@
+$font-stack: "Roboto Mono", monospace;
+
+//light
+@font-face {
+    font-family: $font-stack;
+    src: url("../../assets/fonts/RobotoMono-Light.woff2") format("woff2"),
+        url("../../assets/fonts/RobotoMono-Light.woff") format("woff"),
+        url("../../assets/fonts/RobotoMono-Light.ttf") format("truetype");
+    font-weight: 700;
+}
+
+//regular
+@font-face {
+    font-family: $font-stack;
+    src: url("../../assets/fonts/RobotoMono-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/RobotoMono-Regular.woff") format("woff"),
+        url("../../assets/fonts/RobotoMono-Regular.ttf") format("truetype");
+}
+
+//bold
+@font-face {
+    font-family: $font-stack;
+    src: url("../../assets/fonts/RobotoMono-Bold.woff2") format("woff2"),
+        url("../../assets/fonts/RobotoMono-Bold.woff") format("woff"),
+        url("../../assets/fonts/RobotoMono-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
