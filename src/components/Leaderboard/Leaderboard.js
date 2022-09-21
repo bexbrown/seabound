@@ -1,6 +1,27 @@
 import './Leaderboard.scss';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { v4 as uuid } from 'uuid';
 
 function Leaderboard() {
+
+    const [leaderboard, setLeaderboard] = useState([]);
+
+    function getLeaderboard() {
+        axios
+            .get('http://localhost:8080/leaderboard')
+            .then(response => {
+                let leaderboardData = response.data;
+                let currentLeaderboard = []
+                for (let i = 0; i < 10; i++) {
+                    currentLeaderboard.push(leaderboardData[i]);
+                }
+                setLeaderboard(currentLeaderboard);
+            })
+    }
+    getLeaderboard();
+
+
     return (
         <main className='leaderboard'>
             <div className='leaderboard__container'>
@@ -9,56 +30,17 @@ function Leaderboard() {
                     <h2 className='leaderboard__heading leaderboard__score'>Score</h2>
                     <h2 className='leaderboard__heading leaderboard__name'>Name</h2>
                 </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>1</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>2</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>3</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>4</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>5</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>6</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>7</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>8</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>9</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
-                <div className='leaderboard__row'>
-                    <span className='leaderboard__rank'>10</span>
-                    <span className='leaderboard__score'>20</span>
-                    <span className='leaderboard__name'>Jennifer Apple</span>
-                </div>
+                {leaderboard.map((item, index) => {
+                    return (
+                        <div key={uuid()} className='leaderboard__row'>
+                            <span key={uuid()} className='leaderboard__rank'>{index + 1}</span>
+                            <span key={uuid()} className='leaderboard__score'>{item.score}</span>
+                            <span key={uuid()} className='leaderboard__name'>{item.name}</span>
+                        </div>
+                    )
+                })}
+
+
             </div>
         </main>
     )
