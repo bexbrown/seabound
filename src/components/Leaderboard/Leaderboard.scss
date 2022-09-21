@@ -1,43 +1,46 @@
 @use '../../styles/partials/colors' as *;
+@use '../../styles/partials/mixins' as *;
 
 .leaderboard {
-    margin: 1.5rem;
+    margin: 0 1.5rem;
 
 
     &__container {
         width: 17rem;
         height: 17rem;
         margin: 0 auto;
-        border: 2px solid $color-jellyfish;
-        background-color: $color-card;
+        background-color: $color-text;
         color: $color-bg;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include tablet {
+            width: 34rem;
+            height: 34rem;
+        }
     }
 
     &__row {
+        height: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        align-items: center;
         text-align: center;
-        padding: 0 0.5rem;
-        border-bottom: 2px solid $color-jellyfish;
-        text-transform: uppercase;
-        height: 22.3px;
+        border-bottom: 2px solid $color-bg;
     }
 
     &__row--titles {
-        background-color: $color-turtle;
+        background-color: $color-card;
         color: $color-bg;
-        height: 47.05px;
+        text-transform: uppercase;
     }
 
     &__rank {
         flex-basis: 20%;
-        border-right: 2px solid $color-jellyfish;
     }
 
     &__score {
         flex-basis: 20%;
-        border-right: 2px solid $color-jellyfish;
     }
 
     &__name {

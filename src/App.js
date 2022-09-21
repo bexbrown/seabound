@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import HomePage from './pages/HomePage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import NotFoundPage from './pages/NotFoundPage';
+import Banner from './components/Banner/Banner';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path='/leaderboard' element={<LeaderboardPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
+      <Banner />
     </BrowserRouter>
   );
 }

@@ -1,0 +1,54 @@
+@use '../../styles/partials/colors' as *;
+@use '../../styles/partials/mixins' as *;
+
+.banner {
+    width: 100%;
+    background-color: $color-bg;
+    color: $color-bg;
+    position: fixed;
+    bottom: 0;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        width: 17rem;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        background-color: $color-bg;
+        color: $color-text;
+
+        @include tablet {
+            width: 34rem;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+    }
+
+    &__title {
+        text-transform: uppercase;
+        color: $color-text;
+    }
+
+    &__turtle {
+        width: 1rem;
+        height: 1rem;
+    }
+
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-transform: uppercase;
+    }
+
+    &__label {
+        margin: 0;
+    }
+
+    &__data {
+        margin: 0;
+
+    }
+}

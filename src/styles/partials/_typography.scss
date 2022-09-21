@@ -4,8 +4,32 @@
 h1 {
     font-size: 1.25rem;
     padding: 0;
+
+    @include tablet {
+        font-size: 1.5rem;
+    }
 }
 
 h2 {
     font-size: 1rem;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
+}
+
+h3 {
+    font-size: 0.85rem;
+
+    @include tablet {
+        font-size: 1.1rem;
+    }
+}
+
+h4 {
+    font-size: 0.8rem;
+
+    @include tablet {
+        font-size: 1rem;
+    }
 }
