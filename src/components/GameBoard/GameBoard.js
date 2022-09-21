@@ -8,6 +8,7 @@ import GameStart from '../GameStart/GameStart';
 import GamePause from '../GamePause/GamePause';
 import GameOver from '../GameOver/GameOver';
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 
 
 const Turtle = styled.div`
@@ -50,6 +51,8 @@ function GameBoard() {
     const [gameOver, setGameOver] = useState(false);
     const [gameOverReason, setGameOverReason] = useState('');
 
+    const [leaderboardData, setLeaderboardData] = useState([]);
+
     function gameRestart() {
         setKeyCode(null);
         setTurtlePosition([8, 8]);
@@ -77,6 +80,8 @@ function GameBoard() {
             setTurtleSpeed(175);
         }
     }
+
+
 
     useEffect(() => {
 
@@ -117,11 +122,21 @@ function GameBoard() {
             bags.forEach((bag, index) => {
                 if (turtlePosition[0] === bag[0]
                     && turtlePosition[1] === bagPositions[index][1]) {
-                    setGameOver(true);
+                    // getLeaderboard();
+                    // setGameOver(true);
+                    // compareScores();
                 }
                 return () => clearInterval(turtleMove);
             })
 
+            function compareScores() {
+                axios
+                    .get('http://localhost:8080/leaderboard')
+                    .then(response => {
+                        console.log(response.data)
+                        setLeaderboardData(response);
+                    })
+            }
 
 
             //check for turtle out of bounds
@@ -130,6 +145,7 @@ function GameBoard() {
                     || turtlePosition[0] > 16
                     || turtlePosition[1] < 0
                     || turtlePosition[1] > 16) {
+                    // compareScores();
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
@@ -139,6 +155,7 @@ function GameBoard() {
                     || turtlePosition[0] > 33
                     || turtlePosition[1] < 0
                     || turtlePosition[1] > 33) {
+                    // compareScores();
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
@@ -182,7 +199,7 @@ function GameBoard() {
         }
         if (gameOver && event.keyCode === 32) {
             setGamePause(false);
-            gameRestart();
+            // gameRestart();
         }
         if (event.keyCode === 37) {
             setKeyCode(37);
@@ -238,7 +255,7 @@ function GameBoard() {
 
             {gamePause && <GamePause />}
 
-            {gameOver && <GameOver gameOverReason={gameOverReason} />}
+            {gameOver && <GameOver gameOverReason={gameOverReason} jellyfishCount={jellyfishCount} />}
 
             {gameActive && <div className="game__score">
                 <h3 className="game__score--text">Score</h3>
