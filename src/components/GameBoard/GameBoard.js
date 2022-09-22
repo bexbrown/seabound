@@ -50,9 +50,24 @@ function GameBoard() {
     const [gamePause, setGamePause] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverReason, setGameOverReason] = useState('');
+    const [highScore, setHighScore] = useState(false);
 
-    const [leaderboardData, setLeaderboardData] = useState([]);
+    //GET leaderboard data and setHighScore if true
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/leaderboard')
+            .then(response => {
+                let leaderboard = response.data;
+                console.log(leaderboard);
+                if (leaderboard[9].score < jellyfishCount) {
+                    setHighScore(true);
+                } else {
+                    setHighScore(false);
+                }
+            })
+    }, [gameOver, jellyfishCount])
 
+    //game resets
     function gameRestart() {
         setKeyCode(null);
         setTurtlePosition([8, 8]);
@@ -67,8 +82,9 @@ function GameBoard() {
         setGameOverReason('');
     }
 
-    window.onresize = getWindowSize;
 
+    //set window size, resize and turtle speed based on window resize
+    window.onresize = getWindowSize;
     function getWindowSize() {
         if (window.outerWidth >= 768) {
             setWindowWidth(768);
@@ -81,16 +97,30 @@ function GameBoard() {
         }
     }
 
-
-
     useEffect(() => {
 
         function createBags() {
             let currentPositions = bagPositions;
-            let newBagPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+            let newBagPosition = getNewPosition();
             currentPositions.push(newBagPosition);
             setBagPositions(currentPositions);
         };
+
+        function getNewPosition() {
+            let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+            checkPosition(newPosition);
+            return newPosition;
+        }
+
+        function checkPosition(newPosition) {
+            bagPositions.map((bag) => {
+                if (newPosition === bag || newPosition === turtlePosition) {
+                    return getNewPosition();
+                } else {
+                    return newPosition;
+                }
+            })
+        }
 
         if (gameActive && !gamePause && !gameOver) {
 
@@ -114,7 +144,8 @@ function GameBoard() {
                 && turtlePosition[1] === jellyfishPosition[1]) {
                 let count = jellyfishCount;
                 setJellyfishCount(count + 1);
-                setJellyfishPosition([Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]);
+                let newJellyfishPosition = getNewPosition();
+                setJellyfishPosition(newJellyfishPosition);
                 createBags();
             }
 
@@ -122,22 +153,10 @@ function GameBoard() {
             bags.forEach((bag, index) => {
                 if (turtlePosition[0] === bag[0]
                     && turtlePosition[1] === bagPositions[index][1]) {
-                    // getLeaderboard();
-                    // setGameOver(true);
-                    // compareScores();
+                    setGameOver(true);
                 }
                 return () => clearInterval(turtleMove);
             })
-
-            function compareScores() {
-                axios
-                    .get('http://localhost:8080/leaderboard')
-                    .then(response => {
-                        console.log(response.data)
-                        setLeaderboardData(response);
-                    })
-            }
-
 
             //check for turtle out of bounds
             if (windowWidth === 320) {
@@ -145,7 +164,6 @@ function GameBoard() {
                     || turtlePosition[0] > 16
                     || turtlePosition[1] < 0
                     || turtlePosition[1] > 16) {
-                    // compareScores();
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
@@ -155,7 +173,6 @@ function GameBoard() {
                     || turtlePosition[0] > 33
                     || turtlePosition[1] < 0
                     || turtlePosition[1] > 33) {
-                    // compareScores();
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
@@ -185,7 +202,7 @@ function GameBoard() {
         }
     }, [turtlePosition, turtleDirection, gameActive, gamePause, gameOver, jellyfishCount, jellyfishPosition, keyCode, bagPositions, windowWidth, windowResize, turtleSpeed])
 
-    //navigate turtle with arrow keys
+    //navigate turtle with arrow keys & handle space bar press
     const handleKeyDown = useCallback((event) => {
 
         if (!gameActive && event.keyCode === 32) {
@@ -197,9 +214,12 @@ function GameBoard() {
         if (gamePause && event.keyCode === 32) {
             setGamePause(false);
         }
-        if (gameOver && event.keyCode === 32) {
+        if (gameOver && event.keyCode === 32 && highScore) {
             setGamePause(false);
-            // gameRestart();
+        }
+        if (gameOver && event.keyCode === 32 && !highScore) {
+            setGamePause(false);
+            gameRestart();
         }
         if (event.keyCode === 37) {
             setKeyCode(37);
@@ -212,8 +232,9 @@ function GameBoard() {
         if (event.keyCode === 40) {
             setKeyCode(40);
         }
-    }, [gameActive, gamePause, gameOver])
+    }, [gameActive, gamePause, gameOver, highScore])
 
+    //keydown event on window
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
         return () => {
@@ -221,9 +242,8 @@ function GameBoard() {
         };
     }, [handleKeyDown]);
 
+    //set random jellyfishPostion and bagPositions for screen widths
     useEffect(() => {
-
-
         if (windowWidth === 768) {
             setJellyfishPosition([Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]);
             setBagPositions([[Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]]);
@@ -255,12 +275,17 @@ function GameBoard() {
 
             {gamePause && <GamePause />}
 
-            {gameOver && <GameOver gameOverReason={gameOverReason} jellyfishCount={jellyfishCount} />}
+            {gameOver && <GameOver gameOverReason={gameOverReason} jellyfishCount={jellyfishCount} highScore={highScore} />}
 
-            {gameActive && <div className="game__score">
-                <h3 className="game__score--text">Score</h3>
-                <h3 className="game__score--number" >: {jellyfishCount}</h3>
-            </div>}
+            {gameActive
+                ? <div className="game__score">
+                    <h3 className="game__score--text">Score</h3>
+                    <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                </div>
+                : <div className="game__score">
+                    <h3 className="game__score--text">Score</h3>
+                    <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                </div>}
         </div>
     )
 }

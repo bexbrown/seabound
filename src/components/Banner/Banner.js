@@ -17,10 +17,6 @@ function Banner() {
                     <h4 className='banner__label'>Status:</h4>
                     <h4 className='banner__data'>Vulnerable</h4>
                 </div>
-                {/* <div className='banner__row'>
-                <h2 className='banner__label'>De:</h2>
-                <h2 className='banner__data'>Vulnerable</h2>
-            </div> */}
             </div>
         </div>
     )

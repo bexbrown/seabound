@@ -9,6 +9,7 @@
         width: 17rem;
         height: 17rem;
         margin: 0 auto;
+        margin-bottom: 43.19px;
         background-color: $color-text;
         color: $color-bg;
         display: flex;
@@ -18,6 +19,7 @@
         @include tablet {
             width: 34rem;
             height: 34rem;
+            margin-bottom: 55.69px;
         }
     }
 

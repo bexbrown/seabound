@@ -6,7 +6,7 @@
     padding: 1rem;
 
     @include tablet {
-        padding: 0.5rem;
+        padding: 0 0.5rem;
     }
 
     &__container {
@@ -43,7 +43,7 @@
         width: 100%;
         display: flex;
         justify-content: space-evenly;
-        padding-top: 2rem;
+        padding-top: 1.5rem;
 
         @include tablet {
             width: 40%;

@@ -7,10 +7,11 @@ function Leaderboard() {
 
     const [leaderboard, setLeaderboard] = useState([]);
 
-    function getLeaderboard() {
+    useEffect(() => {
         axios
             .get('http://localhost:8080/leaderboard')
             .then(response => {
+                console.log(response.data)
                 let leaderboardData = response.data;
                 let currentLeaderboard = []
                 for (let i = 0; i < 10; i++) {
@@ -18,8 +19,8 @@ function Leaderboard() {
                 }
                 setLeaderboard(currentLeaderboard);
             })
-    }
-    getLeaderboard();
+    }, [setLeaderboard])
+
 
 
     return (

@@ -5,15 +5,13 @@
     width: 100%;
     background-color: $color-bg;
     color: $color-bg;
-    position: fixed;
-    bottom: 0;
 
     &__container {
         display: flex;
         flex-direction: column;
         width: 17rem;
         margin: 0 auto;
-        padding: 1rem 2rem;
+        padding: 0rem 2rem;
         background-color: $color-bg;
         color: $color-text;
 
@@ -28,6 +26,7 @@
     &__title {
         text-transform: uppercase;
         color: $color-text;
+        margin: 0;
     }
 
     &__turtle {
@@ -39,7 +38,7 @@
     &__row {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         text-transform: uppercase;
     }
 
