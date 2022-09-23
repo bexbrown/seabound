@@ -37,7 +37,6 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     }
 
     function handleInputChange(event) {
-        console.log(event.target.value)
         if (event.target.value.length < 2) {
             setFormInvalid(true);
         } else {
@@ -49,7 +48,6 @@ function HighScore({ gameOverReason, jellyfishCount }) {
         event.preventDefault();
         let name = event.target.name.value;
         if (name.length < 2) {
-            // setFormInvalid(true);
             return console.log('name must be 2 or more characters.');
         }
 

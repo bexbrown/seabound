@@ -39,7 +39,7 @@ function Game() {
     const [windowResize, setWindowResize] = useState(false)
 
     const [keyCode, setKeyCode] = useState(null);
-    const [turtlePosition, setTurtlePosition] = useState([8, 8]);
+    const [turtlePosition, setTurtlePosition] = useState([]);
     const [turtleDirection, setTurtleDirection] = useState('UP');
     const [turtleRotation, setTurtleRotation] = useState(0);
     const [turtleSpeed, setTurtleSpeed] = useState(null);
@@ -65,6 +65,9 @@ function Game() {
                 } else {
                     setHighScore(false);
                 }
+            })
+            .catch(error => {
+                console.log('there was an error:', error);
             })
     }, [gameOver, jellyfishCount])
 
@@ -94,9 +97,11 @@ function Game() {
         if (windowWidth >= 768) {
             setWindowResize(true);
             setTurtleSpeed(87.5);
+            setTurtlePosition([16, 16])
         } else {
             setWindowResize(true);
             setTurtleSpeed(175);
+            setTurtlePosition([8, 8])
         }
 
     }, [windowWidth])
@@ -172,9 +177,9 @@ function Game() {
             //check for turtle out of bounds
             if (windowWidth >= 768) {
                 if (turtlePosition[0] < 0
-                    || turtlePosition[0] > 33
+                    || turtlePosition[0] > 32
                     || turtlePosition[1] < 0
-                    || turtlePosition[1] > 33) {
+                    || turtlePosition[1] > 32) {
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;

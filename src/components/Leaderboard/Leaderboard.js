@@ -18,9 +18,10 @@ function Leaderboard() {
                 }
                 setLeaderboard(currentLeaderboard);
             })
+            .catch(error => {
+                console.log('there was an error:', error);
+            })
     }, [setLeaderboard])
-
-
 
     return (
         <main className='leaderboard'>
