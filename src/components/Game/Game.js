@@ -1,4 +1,4 @@
-import './GameBoard.scss';
+import './Game.scss';
 import styled from 'styled-components';
 import TurtleImage from '../../assets/images/Turtle.svg';
 import { useState, useEffect, useCallback } from 'react';
@@ -31,9 +31,11 @@ const Bag = styled.div`
     top: ${props => props.bagPositionsY}rem; 
     `;
 
-function GameBoard() {
+function Game() {
 
-    const [windowWidth, setWindowWidth] = useState(768);
+    let width = window.outerWidth;
+
+    const [windowWidth, setWindowWidth] = useState(width);
     const [windowResize, setWindowResize] = useState(false)
 
     const [keyCode, setKeyCode] = useState(null);
@@ -58,7 +60,6 @@ function GameBoard() {
             .get('http://localhost:8080/leaderboard')
             .then(response => {
                 let leaderboard = response.data;
-                console.log(leaderboard);
                 if (leaderboard[9].score < jellyfishCount) {
                     setHighScore(true);
                 } else {
@@ -82,20 +83,23 @@ function GameBoard() {
         setGameOverReason('');
     }
 
-
     //set window size, resize and turtle speed based on window resize
     window.onresize = getWindowSize;
     function getWindowSize() {
-        if (window.outerWidth >= 768) {
-            setWindowWidth(768);
+        let width = window.outerWidth;
+        setWindowWidth(width);
+    }
+
+    useEffect(() => {
+        if (windowWidth >= 768) {
             setWindowResize(true);
             setTurtleSpeed(87.5);
         } else {
-            setWindowWidth(320);
             setWindowResize(true);
             setTurtleSpeed(175);
         }
-    }
+
+    }, [windowWidth])
 
     useEffect(() => {
 
@@ -107,14 +111,21 @@ function GameBoard() {
         };
 
         function getNewPosition() {
-            let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
-            checkPosition(newPosition);
-            return newPosition;
+            if (windowWidth < 768) {
+                let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+                checkPosition(newPosition);
+                return newPosition;
+            } else {
+                let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
+                checkPosition(newPosition);
+                return newPosition;
+            }
+
         }
 
         function checkPosition(newPosition) {
             bagPositions.map((bag) => {
-                if (newPosition === bag || newPosition === turtlePosition) {
+                if (newPosition === bag || newPosition === turtlePosition || newPosition === jellyfishPosition) {
                     return getNewPosition();
                 } else {
                     return newPosition;
@@ -159,16 +170,7 @@ function GameBoard() {
             })
 
             //check for turtle out of bounds
-            if (windowWidth === 320) {
-                if (turtlePosition[0] < 0
-                    || turtlePosition[0] > 16
-                    || turtlePosition[1] < 0
-                    || turtlePosition[1] > 16) {
-                    setGameOver(true);
-                    setGameOverReason('bounds');
-                    return;
-                }
-            } else {
+            if (windowWidth >= 768) {
                 if (turtlePosition[0] < 0
                     || turtlePosition[0] > 33
                     || turtlePosition[1] < 0
@@ -177,6 +179,16 @@ function GameBoard() {
                     setGameOverReason('bounds');
                     return;
                 }
+            } else {
+                if (turtlePosition[0] < 0
+                    || turtlePosition[0] > 16
+                    || turtlePosition[1] < 0
+                    || turtlePosition[1] > 16) {
+                    setGameOver(true);
+                    setGameOverReason('bounds');
+                    return;
+                }
+
             }
 
             //set interval for turtle movement
@@ -242,9 +254,9 @@ function GameBoard() {
         };
     }, [handleKeyDown]);
 
-    //set random jellyfishPostion and bagPositions for screen widths
+    //set initial random jellyfishPostion and bagPositions for screen widths
     useEffect(() => {
-        if (windowWidth === 768) {
+        if (windowWidth >= 768) {
             setJellyfishPosition([Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]);
             setBagPositions([[Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]]);
         } else {
@@ -258,14 +270,14 @@ function GameBoard() {
 
             {!gameActive && <GameStart />}
 
-            {(gameActive && !gameOver && !gamePause && (windowWidth === 320)) && <div className='game__board'>
+            {(gameActive && !gameOver && !gamePause && (windowWidth < 768)) && <div className='game__board'>
                 <Turtle turtlePositionX={turtlePosition[0]} turtlePositionY={turtlePosition[1]} turtleRotation={turtleRotation} className="game__piece game__turtle" />
                 <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} className="game__piece game__jellyfish" />
                 {bagPositions.map((bag) => {
                     return <Bag key={uuid()} bagPositionsX={bag[0]} bagPositionsY={bag[1]} className="game__piece game__bag" />
                 })}
             </div>}
-            {(gameActive && !gameOver && !gamePause && (windowWidth === 768)) && <div className='game__board'>
+            {(gameActive && !gameOver && !gamePause && (windowWidth >= 768)) && <div className='game__board'>
                 <Turtle turtlePositionX={turtlePosition[0]} turtlePositionY={turtlePosition[1]} turtleRotation={turtleRotation} className="game__piece game__turtle" />
                 <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} className="game__piece game__jellyfish" />
                 {bagPositions.map((bag) => {
@@ -282,7 +294,7 @@ function GameBoard() {
                     <h3 className="game__score--text">Score</h3>
                     <h3 className="game__score--number" >: {jellyfishCount}</h3>
                 </div>
-                : <div className="game__score">
+                : <div className="game__score game__score--hidden">
                     <h3 className="game__score--text">Score</h3>
                     <h3 className="game__score--number" >: {jellyfishCount}</h3>
                 </div>}
@@ -290,7 +302,7 @@ function GameBoard() {
     )
 }
 
-export default GameBoard;
+export default Game;
 
 
 

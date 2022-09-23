@@ -1,14 +1,27 @@
+@use '../../styles/partials/colors' as *;
+@use '../../styles/partials/mixins' as *;
+
 .error {
-    margin: 1.5rem;
+    // margin: 1.5rem;
 
     &__container {
-        background-color: wheat;
+        background-color: $color-card;
+        color: $color-bg;
         height: 17rem;
         width: 17rem;
         padding: 0.5rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 0 auto;
+        margin-bottom: 43.19px;
+        border: 1px solid $color-text;
+
+        @include tablet {
+            width: 34rem;
+            height: 34rem;
+            margin-bottom: 55.69px;
+        }
     }
 
 }

@@ -38,6 +38,9 @@
         display: flex;
         margin: 0 auto;
         color: $color-text;
+    }
+
+    &__score--hidden {
         visibility: hidden;
     }
 

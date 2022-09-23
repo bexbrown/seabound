@@ -37,6 +37,14 @@
         text-transform: uppercase;
     }
 
+    &__row--data {
+        font-size: 0.8rem;
+
+        @include tablet {
+            font-size: 1rem;
+        }
+    }
+
     &__rank {
         flex-basis: 20%;
     }

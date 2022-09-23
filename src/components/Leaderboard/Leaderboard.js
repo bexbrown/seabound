@@ -11,7 +11,6 @@ function Leaderboard() {
         axios
             .get('http://localhost:8080/leaderboard')
             .then(response => {
-                console.log(response.data)
                 let leaderboardData = response.data;
                 let currentLeaderboard = []
                 for (let i = 0; i < 10; i++) {
@@ -33,7 +32,7 @@ function Leaderboard() {
                 </div>
                 {leaderboard.map((item, index) => {
                     return (
-                        <div key={uuid()} className='leaderboard__row'>
+                        <div key={uuid()} className='leaderboard__row leaderboard__row--data'>
                             <span key={uuid()} className='leaderboard__rank'>{index + 1}</span>
                             <span key={uuid()} className='leaderboard__score'>{item.score}</span>
                             <span key={uuid()} className='leaderboard__name'>{item.name}</span>

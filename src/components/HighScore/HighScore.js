@@ -1,13 +1,15 @@
 import './HighScore.scss';
 import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
 import axios from 'axios';
 
 function HighScore({ gameOverReason, jellyfishCount }) {
 
     let navigate = useNavigate();
 
+    const [formInvalid, setFormInvalid] = useState(false);
 
+    //post high score to leaderboard
     const postLeaderboardScore = (postBody) => {
         axios
             .post('http://localhost:8080/leaderboard', postBody)
@@ -34,11 +36,21 @@ function HighScore({ gameOverReason, jellyfishCount }) {
             })
     }
 
+    function handleInputChange(event) {
+        console.log(event.target.value)
+        if (event.target.value.length < 2) {
+            setFormInvalid(true);
+        } else {
+            setFormInvalid(false);
+        }
+    }
+
     function handleFormSubmit(event) {
         event.preventDefault();
         let name = event.target.name.value;
         if (name.length < 2) {
-            return console.log('name must be 2 or more characters.')
+            // setFormInvalid(true);
+            return console.log('name must be 2 or more characters.');
         }
 
         let postBody = {
@@ -62,7 +74,10 @@ function HighScore({ gameOverReason, jellyfishCount }) {
             <form className='highscore__form' onSubmit={handleFormSubmit}>
                 <label htmlFor='name' className='highscore__label'>To be featured on the leaderboard:</label>
                 <div className='highscore__enter'>
-                    <input type='text' name='name' placeholder='Enter name here' className='highscore__input' />
+                    {formInvalid
+                        ? <input type='text' name='name' placeholder='Enter name here' className='highscore__input highscore__input--invalid' onChange={handleInputChange} />
+                        : <input type='text' name='name' placeholder='Enter name here' className='highscore__input' onChange={handleInputChange} />}
+
                     <input type='submit' className='highscore__button' />
                 </div>
             </form>

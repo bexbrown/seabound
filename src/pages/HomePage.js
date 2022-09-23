@@ -1,7 +1,7 @@
-import GameBoard from '../components/GameBoard/GameBoard';
+import Game from '../components/Game/Game';
 
 function HomePage() {
-    return <GameBoard />
+    return <Game />
 }
 
 export default HomePage;
