@@ -3,23 +3,28 @@
 
 .leaderboard {
     margin: 0 1.5rem;
+    margin-bottom: 43.19px;
 
+    @include tablet {
+        margin: 0 auto;
+        margin-bottom: 39px;
+    }
 
     &__container {
         width: 17rem;
         height: 17rem;
+        border-radius: 6px;
         margin: 0 auto;
-        margin-bottom: 43.19px;
         background-color: $color-text;
         color: $color-bg;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
+
         @include tablet {
             width: 34rem;
             height: 34rem;
-            margin-bottom: 55.69px;
         }
     }
 

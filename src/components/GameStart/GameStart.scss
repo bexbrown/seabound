@@ -12,13 +12,30 @@
     justify-content: center;
     align-items: center;
     background-color: $color-card;
-    border: 1px solid $color-text;
+    border-radius: 6px;
+    // background: repeating-linear-gradient(-45deg, $color-bg, $color-water, $color-card, $color-text);
+    // background-size: 350% 350%;
+    // animation: gradient 20s ease-in-out infinite;
 
     @include tablet {
         text-align: center;
         width: 34rem;
         height: 34rem;
     }
+
+    // @keyframes gradient {
+    //     0% {
+    //         background-position: 0% 50%;
+    //     }
+
+    //     50% {
+    //         background-position: 100% 50%;
+    //     }
+
+    //     100% {
+    //         background-position: 0% 50%;
+    //     }
+    // }
 
 
     &__title {
@@ -45,21 +62,43 @@
         @include tablet {
             width: 2rem;
             height: 2rem;
-            margin-right: 1rem;
+            margin-right: 0.75rem;
         }
     }
 
-    &__icon--turtle {
-        background-image: url('../../assets/images/Turtle.svg');
+    &__icon--jellyfish1 {
+        background-image: url('../../assets/images/Jellyfish1.png');
     }
 
-    &__icon--jellyfish {
-        background-image: url('../../assets/images/Jellyfish.svg');
+    &__icon--jellyfish2 {
+        background-image: url('../../assets/images/Jellyfish2.png');
+    }
+
+    &__icon--jellyfish3 {
+        background-image: url('../../assets/images/Jellyfish3.png');
+    }
+
+    &__icon--jellyfish4 {
+        background-image: url('../../assets/images/Jellyfish4.png');
     }
 
     &__icon--bag {
         background-image: url('../../assets/images/Bag.png');
+    }
 
+    &__icon--bottle {
+        background-image: url('../../assets/images/Bottle.png');
+    }
+
+    &__icon--rings {
+        background-image: url('../../assets/images/PackRings.png');
+        transform: rotate(70deg);
+        background-size: contain;
+        background-position: center;
+    }
+
+    &__icon--cup {
+        background-image: url('../../assets/images/Cup.png');
     }
 
     &__play {

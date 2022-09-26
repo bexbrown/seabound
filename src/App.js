@@ -5,19 +5,23 @@ import HomePage from './pages/HomePage';
 import LeaderboardPage from './pages/LeaderboardPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Banner from './components/Banner/Banner';
+import { useState } from 'react';
 
 
 function App() {
 
+  const [player, setPlayer] = useState('GreenSeaTurtle');
+
   return (
+
     <BrowserRouter>
-      <Header />
+      <Header player={player} setPlayer={setPlayer} />
       <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/leaderboard' element={<LeaderboardPage />} />
+        <Route path='/' element={<HomePage player={player} setPlayer={setPlayer} />} />
+        <Route path='/leaderboard' element={<LeaderboardPage player={player} setPlayer={setPlayer} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-      <Banner />
+      <Banner player={player} setPlayer={setPlayer} />
     </BrowserRouter>
   );
 }

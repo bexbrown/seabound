@@ -2,36 +2,81 @@
 @use '../../styles/partials/mixins' as *;
 
 .banner {
-    width: 100%;
     background-color: $color-bg;
-    color: $color-bg;
+    color: $color-text;
 
-    &__container {
-        display: flex;
-        flex-direction: column;
+    &__heading {
+        font-size: 0.65rem;
         width: 17rem;
+        text-align: left;
         margin: 0 auto;
-        padding: 0rem 2rem;
-        background-color: $color-bg;
-        color: $color-text;
+        padding: 0.25rem 0;
+        text-transform: uppercase;
 
         @include tablet {
             width: 34rem;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // width: 17rem;
+        margin: 0 auto;
+
+        @include tablet {
+            width: 34rem;
+        }
+    }
+
+
+    &__container {
+        display: flex;
+        // flex-direction: column;
+        justify-content: center;
+        width: 13rem;
+        // margin: 0 auto;
+        // padding: 0.5rem;
+        // background-color: $color-card;
+        border: 1px solid $color-turtle;
+        border-radius: 6px;
+        // color: $color-bg;
+
+        @include tablet {
+            // width: 34rem;
+            width: 30rem;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
         }
 
     }
 
     &__title {
-        text-transform: uppercase;
-        color: $color-text;
+        // text-transform: uppercase;
+        // color: $color-bg;
+        font-size: 0.7rem;
         margin: 0;
+
+        @include tablet {
+            font-size: 1rem;
+            // flex-basis: 90%;
+            text-align: center;
+        }
     }
 
     &__turtle {
-        width: 1rem;
-        height: 1rem;
+        width: 1.5rem;
+        height: 1.5rem;
+
+        @include tablet {
+            flex-basis: 10%;
+            height: 2rem;
+            width: 2rem;
+        }
+
     }
 
 
@@ -39,15 +84,62 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        text-transform: uppercase;
+        padding: 0.5rem;
+
+        @include tablet {
+            padding: 0;
+        }
+    }
+
+    &__row--title {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    &__row--status {
+        @include tablet {
+            justify-content: center;
+        }
     }
 
     &__label {
+        font-size: 0.6rem;
         margin: 0;
+        text-transform: uppercase;
+
+        @include tablet {
+            margin-left: 1rem;
+        }
     }
 
     &__data {
+        font-size: 0.6rem;
         margin: 0;
 
+
     }
+
+    &__span {
+        padding: 0 0.1rem;
+        font-size: 0.6rem;
+    }
+
+    &__arrow {
+        width: 0.75rem;
+        height: 0.75rem;
+        cursor: pointer;
+    }
+
+    &__arrow--left {
+        // margin: 1rem 1rem 1rem 0;
+        margin: 1rem;
+    }
+
+    &__arrow--right {
+        // margin: 1rem 0 1rem 1rem;
+        margin: 1rem;
+    }
+
+
 }

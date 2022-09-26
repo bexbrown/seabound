@@ -1,58 +1,107 @@
 import './Game.scss';
 import styled from 'styled-components';
-import TurtleImage from '../../assets/images/Turtle.svg';
+import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-import JellyfishImage from '../../assets/images/Jellyfish.svg';
-import BagImage from '../../assets/images/Bag.png';
 import GameStart from '../GameStart/GameStart';
 import GamePause from '../GamePause/GamePause';
 import GameOver from '../GameOver/GameOver';
-import { v4 as uuid } from 'uuid';
-import axios from 'axios';
+import JellyfishImage1 from '../../assets/images/Jellyfish1.png';
+import JellyfishImage2 from '../../assets/images/Jellyfish2.png';
+import JellyfishImage3 from '../../assets/images/Jellyfish3.png';
+import JellyfishImage4 from '../../assets/images/Jellyfish4.png';
+import BuoyImage from '../../assets/images/Buoy.png';
+import WavesImage from '../../assets/images/Waves.png';
+import BagImage from '../../assets/images/Bag.png';
+import BottleImage from '../../assets/images/Bottle.png';
+import RingsImage from '../../assets/images/PackRings.png';
+import CupImage from '../../assets/images/Cup.png';
+import Flatback from '../../assets/images/FlatBack.png';
+import HawksBill from '../../assets/images/HawksBill.png';
+import GreenSeaTurtle from '../../assets/images/GreenSeaTurtle.png';
+import Loggerhead from '../../assets/images/Loggerhead.png';
+import KempsRidley from '../../assets/images/KempsRidley.png';
+import OliveRidley from '../../assets/images/OliveRidley.png';
+import Leatherback from '../../assets/images/Leatherback.png';
+
 
 
 const Turtle = styled.div`
-    background-image: url(${TurtleImage});
+    background-image: url(${props => props.playerImage});
+    background-size: contain;
     transform: rotate(${props => props.turtleRotation}deg);
     left: ${props => props.turtlePositionX}rem;
     top: ${props => props.turtlePositionY}rem; 
     `;
 
 const Jellyfish = styled.div`
-    background-image: url(${JellyfishImage});
+    background-image: url(${props => props.jellyfishImage});
+    background-size: contain;
     left: ${props => props.jellyfishPositionX}rem;
     top: ${props => props.jellyfishPositionY}rem; 
     `;
 
-const Bag = styled.div`
-    background-image: url(${BagImage});
+const Trash = styled.div`
+    background-image: url(${props => props.trashImage});
     background-size: contain;
-    left: ${props => props.bagPositionsX}rem;
-    top: ${props => props.bagPositionsY}rem; 
+    left: ${props => props.trashPositionX}rem;
+    top: ${props => props.trashPositionY}rem; 
     `;
 
-function Game() {
+function Game({ player, setPlayer }) {
+
+
 
     let width = window.outerWidth;
 
     const [windowWidth, setWindowWidth] = useState(width);
-    const [windowResize, setWindowResize] = useState(false)
+    const [screenToggle, setScreenToggle] = useState(false);
+    const [gameSize, setGameSize] = useState('');
 
     const [keyCode, setKeyCode] = useState(null);
-    const [turtlePosition, setTurtlePosition] = useState([]);
-    const [turtleDirection, setTurtleDirection] = useState('UP');
-    const [turtleRotation, setTurtleRotation] = useState(0);
-    const [turtleSpeed, setTurtleSpeed] = useState(null);
+    const [playerPosition, setPlayerPosition] = useState([]);
+    const [playerDirection, setPlayerDirection] = useState('UP');
+    const [playerRotation, setPlayerRotation] = useState(0);
+    const [playerSpeed, setPlayerSpeed] = useState(null);
+    const [playerImage, setPlayerImage] = useState(player);
 
     const [jellyfishPosition, setJellyfishPosition] = useState([]);
-    const [bagPositions, setBagPositions] = useState([]);
-    const [jellyfishCount, setJellyfishCount] = useState(0);
+    // const [jellyfishPositionTablet, setJellyfishPositionTablet] = useState([]);
+    // const [trashPositionsTablet, setTrashPositionsTablet] = useState([]);
+    const [trashPositions, setTrashPositions] = useState([]);
 
+    const [trashImages, setTrashImages] = useState([]);
+    const [jellyfishCount, setJellyfishCount] = useState(0);
+    const [jellyfishImage, setJellyfishImage] = useState(null);
+
+    const [gameStart, setGameStart] = useState(false);
     const [gameActive, setGameActive] = useState(false);
     const [gamePause, setGamePause] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [gameOverReason, setGameOverReason] = useState('');
     const [highScore, setHighScore] = useState(false);
+
+    const [toggleIcon, setToggleIcon] = useState(BuoyImage);
+    const [motion, setMotion] = useState(true);
+
+    function handleToggleClick(event) {
+        event.preventDefault();
+        if (toggleIcon === BuoyImage) {
+            setMotion(true)
+            setToggleIcon(WavesImage);
+        } else {
+            setToggleIcon(BuoyImage);
+            setMotion(false);
+        }
+    }
+
+
+    useEffect(() => {
+        const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
+        const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
+        let index = turtleNames.indexOf(player);
+        setPlayerImage(turtleImages[index]);
+    }, [player, setPlayer]);
 
     //GET leaderboard data and setHighScore if true
     useEffect(() => {
@@ -71,124 +120,206 @@ function Game() {
             })
     }, [gameOver, jellyfishCount])
 
-    //game resets
-    function gameRestart() {
-        setKeyCode(null);
-        setTurtlePosition([8, 8]);
-        setTurtleDirection('UP');
-        setTurtleRotation(0);
-        setJellyfishPosition([]);
-        setBagPositions([]);
-        setJellyfishCount(0);
-        setGameActive(false);
-        setGameOver(false);
-        setGamePause(false);
-        setGameOverReason('');
-    }
+    //set window size and resize on window resize
 
-    //set window size, resize and turtle speed based on window resize
     window.onresize = getWindowSize;
     function getWindowSize() {
+
         let width = window.outerWidth;
         setWindowWidth(width);
+
     }
 
+    // const getResizePositions = useCallback((trash, jellyfish) => {
+
+
+    //     if (windowWidth >= 768) {
+
+
+    //         let jellyfishOriginalPosition = jellyfish;
+    //         let trashOriginalPositions = trash;
+    //         let newJellyfishPosition = [jellyfishOriginalPosition[0] * 2, jellyfishOriginalPosition[1] * 2];
+    //         setJellyfishPosition(newJellyfishPosition);
+    //         let newTrashPositions = [];
+    //         trashOriginalPositions.map((trashPosition) => {
+    //             return newTrashPositions.push([trashPosition[0] * 2, trashPosition[1] * 2]);
+    //         })
+
+    //         setTrashPositions(newTrashPositions);
+    //         console.log(trashPositions);
+    //         setScreenToggle(false)
+
+    //     }
+    //     if (windowWidth < 768) {
+    //         console.log(trashPositions);
+    //         let jellyfishOriginalPosition = jellyfish;
+    //         let trashOriginalPositions = trash;
+    //         let newJellyfishPosition = [Math.floor(jellyfishOriginalPosition[0] / 2), Math.floor(jellyfishOriginalPosition[1] / 2)];
+    //         setJellyfishPosition(newJellyfishPosition);
+    //         let newTrashPositions = [];
+    //         trashOriginalPositions.map((trashPosition) => {
+    //             return newTrashPositions.push([trashPosition[0] / 2, trashPosition[1] / 2]);
+    //         })
+    //         console.log(trashPositions);
+    //         setTrashPositions(newTrashPositions);
+    //         setScreenToggle(false);
+    //     }
+    // }, [trashPositions, windowWidth])
+
+    // useEffect(() => {
+
+    //     if (screenToggle === true) {
+    //         getResizePositions();
+    //     }
+    // }, [screenToggle, getResizePositions])
+
+
+    // const toggleScreen = useCallback(() => {
+
+    //     if (gameSize === 'mobile' && windowWidth >= 768) {
+    //         setScreenToggle(true);
+    //     }
+    //     if (gameSize === 'tablet' && windowWidth < 768) {
+    //         setScreenToggle(true);
+    //     }
+    // }, [gameSize, windowWidth]);
+
     useEffect(() => {
+
         if (windowWidth >= 768) {
-            setWindowResize(true);
-            setTurtleSpeed(87.5);
-            setTurtlePosition([16, 16])
+            setPlayerSpeed(87.5);
+            setPlayerPosition([16, 16]);
         } else {
-            setWindowResize(true);
-            setTurtleSpeed(175);
-            setTurtlePosition([8, 8])
+
+            setPlayerSpeed(175);
+            setPlayerPosition([8, 8]);
         }
 
     }, [windowWidth])
 
-    useEffect(() => {
-
-        function createBags() {
-            let currentPositions = bagPositions;
-            let newBagPosition = getNewPosition();
-            currentPositions.push(newBagPosition);
-            setBagPositions(currentPositions);
-        };
-
-        function getNewPosition() {
-            if (windowWidth < 768) {
-                let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
-                checkPosition(newPosition);
-                return newPosition;
-            } else {
-                let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
-                checkPosition(newPosition);
-                return newPosition;
-            }
-
-        }
+    const getNewPosition = useCallback((event) => {
 
         function checkPosition(newPosition) {
-            bagPositions.map((bag) => {
-                if (newPosition === bag || newPosition === turtlePosition || newPosition === jellyfishPosition) {
+            trashPositions.map((trash) => {
+                if (newPosition === trash || newPosition === playerPosition || newPosition === jellyfishPosition) {
                     return getNewPosition();
                 } else {
                     return newPosition;
                 }
             })
         }
+        if (windowWidth < 768) {
+            let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+            checkPosition(newPosition);
+            return newPosition;
+        } else {
+            let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
+            checkPosition(newPosition);
+            return newPosition;
+        }
+    }, [windowWidth, jellyfishPosition, playerPosition, trashPositions]);
+
+    useEffect(() => {
+
+        function createTrash() {
+            let trash = [BagImage, BottleImage, RingsImage, CupImage];
+            let currentPositions = trashPositions;
+            let newTrashPosition = getNewPosition();
+            currentPositions.push(newTrashPosition);
+            setTrashPositions(currentPositions);
+            // let newTabletPositions = [];
+            //         newTrashPosi.map((trashPosition) => {
+            //             return newTrashPositions.push([trashPosition[0] * 2, trashPosition[1] * 2]);
+            //         })
+
+            //         setTrashPositions(newTrashPositions);
+            let currentTrashImages = trashImages;
+            currentTrashImages.push(trash[Math.floor(Math.random() * trash.length)]);
+            setTrashImages(currentTrashImages);
+        };
+
+        // function getNewPosition() {
+        //     if (windowWidth < 768) {
+        //         let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+        //         checkPosition(newPosition);
+        //         return newPosition;
+        //     } else {
+        //         let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
+        //         checkPosition(newPosition);
+        //         return newPosition;
+        //     }
+        // };
+
+        // function checkPosition(newPosition) {
+        //     trashPositions.map((trash) => {
+        //         if (newPosition === trash || newPosition === playerPosition || newPosition === jellyfishPosition) {
+        //             return getNewPosition();
+        //         } else {
+        //             return newPosition;
+        //         }
+        //     })
+        // };
+
+        function getNewImage() {
+            const jellyfishImages = [JellyfishImage1, JellyfishImage2, JellyfishImage3, JellyfishImage4];
+            let index = Math.floor(Math.random() * jellyfishImages.length);
+            setJellyfishImage(jellyfishImages[index]);
+        }
 
         if (gameActive && !gamePause && !gameOver) {
 
             if (keyCode === 37) {
-                setTurtleRotation(270);
-                setTurtleDirection('LEFT')
+                setPlayerRotation(270);
+                setPlayerDirection('LEFT')
             }
             if (keyCode === 38) {
-                setTurtleRotation(0);
-                setTurtleDirection('UP')
+                setPlayerRotation(0);
+                setPlayerDirection('UP')
             }
             if (keyCode === 39) {
-                setTurtleRotation(90);
-                setTurtleDirection('RIGHT');
+                setPlayerRotation(90);
+                setPlayerDirection('RIGHT');
             }
             if (keyCode === 40) {
-                setTurtleRotation(180);
-                setTurtleDirection('DOWN');
+                setPlayerRotation(180);
+                setPlayerDirection('DOWN');
             }
-            if (turtlePosition[0] === jellyfishPosition[0]
-                && turtlePosition[1] === jellyfishPosition[1]) {
+            if (playerPosition[0] === jellyfishPosition[0]
+                && playerPosition[1] === jellyfishPosition[1]) {
                 let count = jellyfishCount;
                 setJellyfishCount(count + 1);
                 let newJellyfishPosition = getNewPosition();
                 setJellyfishPosition(newJellyfishPosition);
-                createBags();
+                // let newTabletPosition = [newJellyfishPosition[0] * 2, newJellyfishPosition[1] * 2];
+                // setJellyfishPosition(newTabletPosition);
+                getNewImage();
+                createTrash();
             }
 
-            let bags = bagPositions;
-            bags.forEach((bag, index) => {
-                if (turtlePosition[0] === bag[0]
-                    && turtlePosition[1] === bagPositions[index][1]) {
+            let trash = trashPositions;
+            trash.forEach((trash, index) => {
+                if (playerPosition[0] === trash[0]
+                    && playerPosition[1] === trashPositions[index][1]) {
                     setGameOver(true);
                 }
-                return () => clearInterval(turtleMove);
+                return () => clearInterval(playerMove);
             })
 
             //check for turtle out of bounds
             if (windowWidth >= 768) {
-                if (turtlePosition[0] < 0
-                    || turtlePosition[0] > 32
-                    || turtlePosition[1] < 0
-                    || turtlePosition[1] > 32) {
+                if (playerPosition[0] < 0
+                    || playerPosition[0] > 32
+                    || playerPosition[1] < 0
+                    || playerPosition[1] > 32) {
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
                 }
             } else {
-                if (turtlePosition[0] < 0
-                    || turtlePosition[0] > 16
-                    || turtlePosition[1] < 0
-                    || turtlePosition[1] > 16) {
+                if (playerPosition[0] < 0
+                    || playerPosition[0] > 16
+                    || playerPosition[1] < 0
+                    || playerPosition[1] > 16) {
                     setGameOver(true);
                     setGameOverReason('bounds');
                     return;
@@ -197,33 +328,57 @@ function Game() {
             }
 
             //set interval for turtle movement
-            let turtleMove = setInterval(function () { turtleMovement() }, turtleSpeed)
-            let x = turtlePosition[0];
-            let y = turtlePosition[1];
-            function turtleMovement() {
+            let playerMove = setInterval(function () { playerMovement() }, playerSpeed)
+            let x = playerPosition[0];
+            let y = playerPosition[1];
+            function playerMovement() {
 
-                if (turtleDirection === 'LEFT') {
-                    setTurtlePosition([x -= 1, y]);
+                if (playerDirection === 'LEFT') {
+                    setPlayerPosition([x -= 1, y]);
                 }
-                if (turtleDirection === 'UP') {
-                    setTurtlePosition([x, y -= 1]);
+                if (playerDirection === 'UP') {
+                    setPlayerPosition([x, y -= 1]);
                 }
-                if (turtleDirection === 'RIGHT') {
-                    setTurtlePosition([x += 1, y]);
+                if (playerDirection === 'RIGHT') {
+                    setPlayerPosition([x += 1, y]);
                 }
-                if (turtleDirection === 'DOWN') {
-                    setTurtlePosition([x, y += 1]);
+                if (playerDirection === 'DOWN') {
+                    setPlayerPosition([x, y += 1]);
                 }
             }
-            return () => clearInterval(turtleMove);
+            return () => clearInterval(playerMove);
         }
-    }, [turtlePosition, turtleDirection, gameActive, gamePause, gameOver, jellyfishCount, jellyfishPosition, keyCode, bagPositions, windowWidth, windowResize, turtleSpeed])
+
+    }, [playerPosition, playerDirection, gameSize, gameActive, gamePause, gameOver, jellyfishCount, jellyfishPosition, keyCode, trashPositions, windowWidth, screenToggle, playerSpeed, trashImages, getNewPosition])
 
     //navigate turtle with arrow keys & handle space bar press
     const handleKeyDown = useCallback((event) => {
 
+        //game resets
+        function gameRestart() {
+            let position = [];
+            if (windowWidth < 768) {
+                position = [8, 8]
+            } else {
+                position = [16, 16];
+            }
+            setKeyCode(null);
+            setPlayerPosition(position);
+            setPlayerDirection('UP');
+            setPlayerRotation(0);
+            setJellyfishPosition([]);
+            setTrashPositions([]);
+            setJellyfishCount(0);
+            setGameActive(false);
+            setGameOver(false);
+            setGamePause(false);
+            setGameOverReason('');
+            setGameStart(false);
+        }
+
         if (!gameActive && event.keyCode === 32) {
             setGameActive(true);
+            setGameStart(true);
         }
         if (gameActive && event.keyCode === 32) {
             setGamePause(true);
@@ -249,7 +404,7 @@ function Game() {
         if (event.keyCode === 40) {
             setKeyCode(40);
         }
-    }, [gameActive, gamePause, gameOver, highScore])
+    }, [gameActive, gamePause, gameOver, highScore, windowWidth])
 
     //keydown event on window
     useEffect(() => {
@@ -261,48 +416,74 @@ function Game() {
 
     //set initial random jellyfishPostion and bagPositions for screen widths
     useEffect(() => {
+        let trash = [BagImage, BottleImage, RingsImage, CupImage];
+        let jellyfish = [JellyfishImage1, JellyfishImage2, JellyfishImage3, JellyfishImage4];
         if (windowWidth >= 768) {
             setJellyfishPosition([Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]);
-            setBagPositions([[Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]]);
+            setTrashPositions([[Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]]);
         } else {
             setJellyfishPosition([Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]);
-            setBagPositions([[Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]]);
+            setTrashPositions([[Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]]);
+
         }
-    }, [gameActive, windowWidth])
+        setTrashImages([trash[Math.floor(Math.random() * trash.length)]]);
+        setJellyfishImage([jellyfish[Math.floor(Math.random() * jellyfish.length)]]);
+
+    }, [gameStart, windowWidth])
 
     return (
         <div className='game'>
+            <div className='game__container'>
 
-            {!gameActive && <GameStart />}
+                {!gameActive && <GameStart player={player} />}
 
-            {(gameActive && !gameOver && !gamePause && (windowWidth < 768)) && <div className='game__board'>
-                <Turtle turtlePositionX={turtlePosition[0]} turtlePositionY={turtlePosition[1]} turtleRotation={turtleRotation} className="game__piece game__turtle" />
-                <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} className="game__piece game__jellyfish" />
-                {bagPositions.map((bag) => {
-                    return <Bag key={uuid()} bagPositionsX={bag[0]} bagPositionsY={bag[1]} className="game__piece game__bag" />
-                })}
-            </div>}
-            {(gameActive && !gameOver && !gamePause && (windowWidth >= 768)) && <div className='game__board'>
-                <Turtle turtlePositionX={turtlePosition[0]} turtlePositionY={turtlePosition[1]} turtleRotation={turtleRotation} className="game__piece game__turtle" />
-                <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} className="game__piece game__jellyfish" />
-                {bagPositions.map((bag) => {
-                    return <Bag key={uuid()} bagPositionsX={bag[0]} bagPositionsY={bag[1]} className="game__piece game__bag" />
-                })}
-            </div>}
-
-            {gamePause && <GamePause />}
-
-            {gameOver && <GameOver gameOverReason={gameOverReason} jellyfishCount={jellyfishCount} highScore={highScore} />}
-
-            {gameActive
-                ? <div className="game__score">
-                    <h3 className="game__score--text">Score</h3>
-                    <h3 className="game__score--number" >: {jellyfishCount}</h3>
-                </div>
-                : <div className="game__score game__score--hidden">
-                    <h3 className="game__score--text">Score</h3>
-                    <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                {(gameActive && !gameOver && !gamePause) && <div className={motion ? 'game__board game__board--waves' : 'game__board'}>
+                    <Turtle turtlePositionX={playerPosition[0]} turtlePositionY={playerPosition[1]} turtleRotation={playerRotation} playerImage={playerImage} className="game__piece game__turtle" />
+                    <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} jellyfishImage={jellyfishImage} className="game__piece game__jellyfish" />
+                    {trashPositions.map((trash, index) => {
+                        return <Trash key={uuid()} trashPositionX={trash[0]} trashPositionY={trash[1]} trashImage={trashImages[index]} className="game__piece game__bag" />
+                    })}
                 </div>}
+
+                {gamePause && <GamePause />}
+
+                {gameOver && <GameOver gameOverReason={gameOverReason} jellyfishCount={jellyfishCount} highScore={highScore} />}
+
+                {gameActive
+                    ?
+                    <div className='game__panel'>
+                        <div className="game__score">
+                            <h3 className="game__score--text">Score</h3>
+                            <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                        </div>
+                        <div className='game__toggle'>
+                            {motion
+                                ? <div className='game__toggle--wrap' onClick={handleToggleClick}>
+                                    <img title='Motion Off' src={BuoyImage} alt='anchor icon' className='game__image' />
+                                    <div className="game__toggle--text">
+                                        Waves Off
+                                    </div>
+
+                                </div>
+
+
+                                : <div className='game__toggle--wrap' onClick={handleToggleClick}>
+                                    <img title='Motion On' src={WavesImage} alt='anchor icon' className='game__image' onClick={handleToggleClick} />
+                                    <div className="game__toggle--text">
+                                        Waves On
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                    : <div className="game__score game__score--hidden">
+                        <h3 className="game__score--text">Score</h3>
+                        <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                    </div>}
+            </div>
+            {/* <Banner player={player} setPlayer={setPlayer} /> */}
         </div>
     )
 }

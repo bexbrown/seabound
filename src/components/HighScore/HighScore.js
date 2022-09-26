@@ -67,7 +67,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
         <div className='highscore'>
             {gameOverReason === 'bounds'
                 ? <h1 className='highscore__title'>Oops! The turtle must stay within the sea bounds.</h1>
-                : <h1 className='highscore__title'>Oh no! The turtle ingested a plastic bag.</h1>}
+                : <h1 className='highscore__title'>Oh no! The turtle ingested a piece of trash.</h1>}
             <h2 className='highscore__text'>You got a high score!</h2>
             <form className='highscore__form' onSubmit={handleFormSubmit}>
                 <label htmlFor='name' className='highscore__label'>To be featured on the leaderboard:</label>

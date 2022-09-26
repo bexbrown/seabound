@@ -8,17 +8,45 @@
     color: $color-bg;
     height: 100%;
 
+    // @include tablet {
+    //     flex-direction: row;
+    //     justify-content: center;
+    // }
+
     &__board {
         position: relative;
         width: 17rem;
         height: 17rem;
         margin: 0 auto;
         display: flex;
+        border-radius: 6px;
         background-color: $color-water;
+        background: linear-gradient(135deg, $color-card, $color-water, $color-bg);
+        background-size: 150% 150%;
 
         @include tablet {
             height: 34rem;
             width: 34rem;
+        }
+    }
+
+    &__board--waves {
+        background: repeating-linear-gradient(-45deg, $color-water, $color-bg, $color-water, $color-card, $color-water, $color-bg);
+        background-size: 350% 350%;
+        animation: gradient 20s ease-in-out infinite;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
         }
     }
 
@@ -34,25 +62,79 @@
         }
     }
 
+    &__panel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        color: $color-text;
+        width: 100%;
+
+        @include tablet {
+            justify-content: space-evenly;
+            margin: 0.25rem 0 1rem 0;
+        }
+    }
+
     &__score {
         display: flex;
-        margin: 0 auto;
-        color: $color-text;
     }
 
     &__score--hidden {
         visibility: hidden;
+        height: 43.19px;
+
+        @include tablet {
+            margin: 0.25rem 0 1rem 0;
+            height: 23px;
+        }
     }
 
     &__score--text {
         text-transform: uppercase;
 
+        @include tablet {
+            margin: 0
+        }
+    }
+
+    &__score--number {
+
+        @include tablet {
+            margin: 0
+        }
     }
 
     &__image {
-        height: 1rem;
-        width: 1rem;
+        width: 1.25rem;
+        height: 1.25rem;
+        cursor: pointer;
     }
 
+    &__toggle {
+        padding-left: 1rem;
+    }
+
+    &__toggle--wrap {
+        position: relative;
+    }
+
+    &__toggle--text {
+        margin-left: 1rem;
+    }
+
+    &__toggle--wrap &__toggle--text {
+        display: none;
+        position: absolute;
+        bottom: 5%;
+        // left: 15%;
+        // right: 10%;
+        padding: .5em;
+        min-width: 10rem;
+    }
+
+    &__toggle--wrap:hover &__toggle--text {
+        display: block;
+    }
 
 }

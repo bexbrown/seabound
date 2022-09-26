@@ -1,13 +1,46 @@
 import './Header.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TurtleImage from '../../assets/images/Turtle.svg';
+import Flatback from '../../assets/images/FlatBack.png';
+import HawksBill from '../../assets/images/HawksBill.png';
+import GreenSeaTurtle from '../../assets/images/GreenSeaTurtle.png';
+import Loggerhead from '../../assets/images/Loggerhead.png';
+import KempsRidley from '../../assets/images/KempsRidley.png';
+import OliveRidley from '../../assets/images/OliveRidley.png';
+import Leatherback from '../../assets/images/Leatherback.png';
+import Logo from '../../assets/images/Logo.png';
 
-function Header() {
+function Header({ player, setPlayer }) {
 
     const navigate = useNavigate();
     const urlLocation = window.location.pathname;
     const [location, setLocation] = useState(urlLocation);
+    const [icon, setIcon] = useState(GreenSeaTurtle);
+
+    const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
+    const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
+
+    useEffect(() => {
+        const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
+        const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
+        let index = turtleNames.indexOf(player);
+        if (index === turtleNames.length) {
+            index = - 1;
+        }
+        setIcon(turtleImages[index]);
+
+    }, [player]);
+
+    function handleLogoClick() {
+
+        let index = turtleImages.indexOf(icon)
+
+        if (index === turtleImages.length - 1) {
+            index = - 1;
+        }
+        setIcon(turtleImages[index + 1]);
+        setPlayer(turtleNames[index + 1]);
+    }
 
     function handlePlayClick(event) {
         event.preventDefault();
@@ -27,11 +60,9 @@ function Header() {
     return (
         <header className='header'>
             <div className='header__container'>
-                <div className='header__row'>
-                    <h1>seabound</h1>
-                    <img src={TurtleImage} alt='turtle' className='header__turtle' />
+                <div className='header__row' onClick={handleLogoClick}>
+                    <img src={Logo} alt='turtle' className='header__logo' />
                 </div>
-                {/* <img src='' alt='logo' className='header__logo' /> */}
                 <nav className='header__navbar'>
                     {location === '/'
                         ?

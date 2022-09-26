@@ -15,12 +15,30 @@
         align-items: center;
         margin: 0 auto;
         margin-bottom: 43.19px;
-        border: 1px solid $color-text;
+        // border: 1px solid $color-text;
+        // border: 1px solid $color-text;
+        background: repeating-linear-gradient(-45deg, $color-bg, $color-water, $color-card, $color-text);
+        background-size: 350% 350%;
+        animation: gradient 20s ease-in-out infinite;
 
         @include tablet {
             width: 34rem;
             height: 34rem;
             margin-bottom: 55.69px;
+        }
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
         }
     }
 
