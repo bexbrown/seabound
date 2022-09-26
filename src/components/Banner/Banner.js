@@ -74,12 +74,6 @@ function Banner({ player, setPlayer }) {
                         <h3 className='banner__title'>{turtleData.name}</h3>
                         <img src={turtleImage} alt='turtle' className='banner__turtle' />
                     </div>
-
-                    {/* <div className='banner__row banner__row--status'>
-                    <h4 className='banner__label'>Conservation Status</h4>
-                    <span className='banner__span'> : </span>
-                    <h4 className='banner__data'>{turtleData.conservationStatus}</h4>
-                </div> */}
                 </div>
                 <img src={RightArrow} alt='right arrow' className='banner__arrow banner__arrow--right' onClick={handleRightClick} />
             </div>
