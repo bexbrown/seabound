@@ -2,7 +2,6 @@ import './Leaderboard.scss';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
-import Banner from '../Banner/Banner';
 
 function Leaderboard({ player, setPlayer }) {
 
@@ -44,7 +43,6 @@ function Leaderboard({ player, setPlayer }) {
 
 
             </div>
-            {/* <Banner player={player} setPlayer={setPlayer} /> */}
         </main>
     )
 }

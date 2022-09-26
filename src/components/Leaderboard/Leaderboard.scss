@@ -6,7 +6,6 @@
     margin-bottom: 43.19px;
 
     @include tablet {
-        margin: 0 auto;
         margin-bottom: 39px;
     }
 
@@ -40,6 +39,8 @@
         background-color: $color-card;
         color: $color-bg;
         text-transform: uppercase;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
     }
 
     &__row--data {
