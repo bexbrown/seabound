@@ -454,23 +454,21 @@ function Game({ player, setPlayer }) {
                     <div className='game__panel'>
                         <div className="game__score">
                             <h3 className="game__score--text">Score</h3>
-                            <h3 className="game__score--number" >: {jellyfishCount}</h3>
+                            <span className='game__score--colon'>:</span>
+                            <h3 className="game__score--number" >{jellyfishCount}</h3>
                         </div>
                         <div className='game__toggle'>
                             {motion
                                 ? <div className='game__toggle--wrap' onClick={handleToggleClick}>
-                                    <img title='Motion Off' src={BuoyImage} alt='anchor icon' className='game__image' />
+                                    <img src={WavesImage} alt='anchor icon' className='game__image' onClick={handleToggleClick} />
+                                    <div className="game__toggle--text  game__toggle--waves">
+                                        Waves On
+                                    </div>
+                                </div>
+                                : <div className='game__toggle--wrap' onClick={handleToggleClick}>
+                                    <img src={BuoyImage} alt='anchor icon' className='game__image' />
                                     <div className="game__toggle--text">
                                         Waves Off
-                                    </div>
-
-                                </div>
-
-
-                                : <div className='game__toggle--wrap' onClick={handleToggleClick}>
-                                    <img title='Motion On' src={WavesImage} alt='anchor icon' className='game__image' onClick={handleToggleClick} />
-                                    <div className="game__toggle--text">
-                                        Waves On
                                     </div>
 
                                 </div>
@@ -483,7 +481,6 @@ function Game({ player, setPlayer }) {
                         <h3 className="game__score--number" >: {jellyfishCount}</h3>
                     </div>}
             </div>
-            {/* <Banner player={player} setPlayer={setPlayer} /> */}
         </div>
     )
 }

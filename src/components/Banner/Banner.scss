@@ -5,6 +5,10 @@
     background-color: $color-bg;
     color: $color-text;
 
+    @include tablet {
+        padding-top: 2rem;
+    }
+
     &__heading {
         font-size: 0.65rem;
         width: 17rem;
@@ -39,7 +43,7 @@
         // margin: 0 auto;
         // padding: 0.5rem;
         // background-color: $color-card;
-        border: 1px solid $color-turtle;
+        border: 1px solid $color-text;
         border-radius: 6px;
         // color: $color-bg;
 

@@ -64,20 +64,28 @@
 
     &__panel {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
         font-size: 0.8rem;
         color: $color-text;
         width: 100%;
+        margin: auto 0;
 
         @include tablet {
-            justify-content: space-evenly;
-            margin: 0.25rem 0 1rem 0;
+            align-items: center;
+            margin: 0.625rem 0 0.625rem 0;
+            height: 23px;
         }
     }
 
     &__score {
         display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    &__score--colon {
+        padding: 0 0.25rem;
     }
 
     &__score--hidden {
@@ -108,33 +116,26 @@
     &__image {
         width: 1.25rem;
         height: 1.25rem;
-        cursor: pointer;
     }
+
 
     &__toggle {
         padding-left: 1rem;
+        cursor: pointer;
     }
 
     &__toggle--wrap {
-        position: relative;
+        display: flex;
+        align-items: center;
+
     }
 
     &__toggle--text {
-        margin-left: 1rem;
-    }
+        margin-left: 0.25rem;
 
-    &__toggle--wrap &__toggle--text {
-        display: none;
-        position: absolute;
-        bottom: 5%;
-        // left: 15%;
-        // right: 10%;
-        padding: .5em;
-        min-width: 10rem;
-    }
+        @include tablet {
+            margin-left: 1rem;
+        }
 
-    &__toggle--wrap:hover &__toggle--text {
-        display: block;
     }
-
 }
