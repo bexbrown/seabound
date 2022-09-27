@@ -7,7 +7,6 @@
 
     @include tablet {
         padding: 1rem 0.5rem;
-        // margin: 0.5rem 0;
     }
 
     &__container {
@@ -32,6 +31,7 @@
     &__logo {
         width: 9rem;
         height: 100%;
+        cursor: pointer;
     }
 
     &__navbar {
@@ -55,6 +55,11 @@
 
     &__navlink--active {
         font-weight: 700;
+        // text-decoration: underline;
+    }
+
+    &__navlink:hover {
+
         text-decoration: underline;
     }
 }

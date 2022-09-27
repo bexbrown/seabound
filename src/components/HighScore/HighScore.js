@@ -2,6 +2,8 @@ import './HighScore.scss';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import TadaSound from '../../assets/sounds/Tada.mp3'
+
 
 function HighScore({ gameOverReason, jellyfishCount }) {
 
@@ -39,7 +41,11 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     function handleInputChange(event) {
         if (event.target.value.length < 2) {
             setFormInvalid(true);
-        } else {
+        }
+        if (event.target.value.length > 20) {
+            setFormInvalid(true);
+        }
+        else {
             setFormInvalid(false);
         }
     }
@@ -79,6 +85,10 @@ function HighScore({ gameOverReason, jellyfishCount }) {
                     <input type='submit' className='highscore__button' />
                 </div>
             </form>
+            <audio autoPlay>
+                <source src={TadaSound} type='audio/mpeg'></source>
+                Your Browser does not support this audio
+            </audio>
         </div>
     )
 }

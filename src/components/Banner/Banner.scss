@@ -41,6 +41,7 @@
         width: 13rem;
         border: 1px solid $color-text;
         border-radius: 6px;
+        cursor: pointer;
 
         @include tablet {
             // width: 34rem;
@@ -54,11 +55,12 @@
     }
 
     &__title {
+        text-transform: uppercase;
         font-size: 0.7rem;
         margin: 0;
 
         @include tablet {
-            font-size: 1rem;
+            font-size: 0.75rem;
             text-align: center;
         }
     }
@@ -90,7 +92,6 @@
     &__row--title {
         display: flex;
         justify-content: space-between;
-        cursor: pointer;
     }
 
     &__row--status {
@@ -185,7 +186,7 @@
         }
 
         to {
-            transform: scale(1.25);
+            transform: scale(1.5);
 
         }
 

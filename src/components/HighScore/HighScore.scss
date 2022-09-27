@@ -7,6 +7,10 @@
 
     &__title {
         margin-top: 0;
+
+        @include tablet {
+            margin-bottom: 1.75rem;
+        }
     }
 
     &__text {
@@ -27,11 +31,14 @@
     &__label {
         text-align: left;
         font-size: 0.75rem;
+        margin-top: 0.5rem;
 
         @include tablet {
             font-size: 1rem;
+            margin-top: 0.75rem;
         }
     }
+
 
     &__input {
         margin: 0.5rem 0;
@@ -56,6 +63,7 @@
         text-transform: uppercase;
         background-color: $color-turtle;
         font-size: 0.75rem;
+        width: 100%;
 
         @include tablet {
             width: 25%;

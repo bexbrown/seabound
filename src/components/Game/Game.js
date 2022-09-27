@@ -23,6 +23,7 @@ import Loggerhead from '../../assets/images/Loggerhead.png';
 import KempsRidley from '../../assets/images/KempsRidley.png';
 import OliveRidley from '../../assets/images/OliveRidley.png';
 import Leatherback from '../../assets/images/Leatherback.png';
+import WavesSound from '../../assets/sounds/Waves.mp3'
 
 
 
@@ -441,8 +442,12 @@ function Game({ player, setPlayer }) {
                     <Turtle turtlePositionX={playerPosition[0]} turtlePositionY={playerPosition[1]} turtleRotation={playerRotation} playerImage={playerImage} className="game__piece game__turtle" />
                     <Jellyfish jellyfishPositionX={jellyfishPosition[0]} jellyfishPositionY={jellyfishPosition[1]} jellyfishImage={jellyfishImage} className="game__piece game__jellyfish" />
                     {trashPositions.map((trash, index) => {
-                        return <Trash key={uuid()} trashPositionX={trash[0]} trashPositionY={trash[1]} trashImage={trashImages[index]} className="game__piece game__bag" />
+                        return <Trash key={uuid()} trashPositionX={trash[0]} trashPositionY={trash[1]} trashImage={trashImages[index]} className="game__piece game__trash" />
                     })}
+                    <audio autoPlay loop>
+                        <source src={WavesSound} type='audio/mpeg'></source>
+                        Your Browser does not support this audio
+                    </audio>
                 </div>}
 
                 {gamePause && <GamePause />}

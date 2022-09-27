@@ -1,27 +1,20 @@
-$font-stack: "Roboto Mono", monospace;
+$font-stack: 'Karla';
 
-//light
-@font-face {
-    font-family: $font-stack;
-    src: url("../../assets/fonts/RobotoMono-Light.woff2") format("woff2"),
-        url("../../assets/fonts/RobotoMono-Light.woff") format("woff"),
-        url("../../assets/fonts/RobotoMono-Light.ttf") format("truetype");
-    font-weight: 700;
-}
 
 //regular
 @font-face {
     font-family: $font-stack;
-    src: url("../../assets/fonts/RobotoMono-Regular.woff2") format("woff2"),
-        url("../../assets/fonts/RobotoMono-Regular.woff") format("woff"),
-        url("../../assets/fonts/RobotoMono-Regular.ttf") format("truetype");
+    src: url("../../assets/fonts/Karla-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/Karla-Regular.woff") format("woff"),
+        url("../../assets/fonts/Karla-Regular.ttf") format("truetype");
+    font-weight: 400;
 }
 
 //bold
 @font-face {
     font-family: $font-stack;
-    src: url("../../assets/fonts/RobotoMono-Bold.woff2") format("woff2"),
-        url("../../assets/fonts/RobotoMono-Bold.woff") format("woff"),
-        url("../../assets/fonts/RobotoMono-Bold.ttf") format("truetype");
+    src: url("../../assets/fonts/Karla-Bold.woff2") format("woff2"),
+        url("../../assets/fonts/Karla-Bold.woff") format("woff"),
+        url("../../assets/fonts/Karla-Bold.ttf") format("truetype");
     font-weight: 700;
 }

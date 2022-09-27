@@ -69,7 +69,7 @@ function Banner({ player, setPlayer }) {
         <div className='banner' >
             <div className='banner__wrapper'>
                 <img src={LeftArrow} alt='left arrow' className='banner__arrow banner__arrow--left' onClick={handleLeftClick} />
-                <div className='banner__container' onClick={handleBannerClick}>
+                <div className='banner__container' onClick={handleBannerClick} >
                     <div className='banner__row banner__row--title'>
                         <h3 className='banner__title'>{turtleData.name}</h3>
                         <img src={turtleImage} alt='turtle' className='banner__turtle' />

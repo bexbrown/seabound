@@ -1,13 +1,6 @@
 import './Header.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Flatback from '../../assets/images/FlatBack.png';
-import HawksBill from '../../assets/images/HawksBill.png';
-import GreenSeaTurtle from '../../assets/images/GreenSeaTurtle.png';
-import Loggerhead from '../../assets/images/Loggerhead.png';
-import KempsRidley from '../../assets/images/KempsRidley.png';
-import OliveRidley from '../../assets/images/OliveRidley.png';
-import Leatherback from '../../assets/images/Leatherback.png';
 import Logo from '../../assets/images/Logo.png';
 
 function Header({ player, setPlayer }) {
@@ -15,31 +8,14 @@ function Header({ player, setPlayer }) {
     const navigate = useNavigate();
     const urlLocation = window.location.pathname;
     const [location, setLocation] = useState(urlLocation);
-    const [icon, setIcon] = useState(GreenSeaTurtle);
 
-    const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
-    const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
-
-    useEffect(() => {
-        const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
-        const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
-        let index = turtleNames.indexOf(player);
-        if (index === turtleNames.length) {
-            index = - 1;
+    function handleLogoClick(event) {
+        event.preventDefault();
+        if (location === '/') {
+            window.location.reload();
         }
-        setIcon(turtleImages[index]);
-
-    }, [player]);
-
-    function handleLogoClick() {
-
-        let index = turtleImages.indexOf(icon)
-
-        if (index === turtleImages.length - 1) {
-            index = - 1;
-        }
-        setIcon(turtleImages[index + 1]);
-        setPlayer(turtleNames[index + 1]);
+        setLocation('/');
+        navigate('/');
     }
 
     function handlePlayClick(event) {
