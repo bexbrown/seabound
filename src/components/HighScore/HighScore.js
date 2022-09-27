@@ -14,13 +14,13 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     //post high score to leaderboard
     const postLeaderboardScore = (postBody) => {
         axios
-            .post('http://localhost:8080/leaderboard', postBody)
+            .post('https://seabound.herokuapp.com//leaderboard', postBody)
             .then(response => {
                 let newScore = response.data;
                 console.log(newScore);
 
                 axios
-                    .get('http://localhost:8080/leaderboard')
+                    .get('https://seabound.herokuapp.com//leaderboard')
                     .then(leaderboardDataResponse => {
                         console.log(leaderboardDataResponse);
                         let leaderboardData = leaderboardDataResponse.data;
@@ -81,7 +81,6 @@ function HighScore({ gameOverReason, jellyfishCount }) {
                     {formInvalid
                         ? <input type='text' name='name' placeholder='Enter name here' className='highscore__input highscore__input--invalid' onChange={handleInputChange} />
                         : <input type='text' name='name' placeholder='Enter name here' className='highscore__input' onChange={handleInputChange} />}
-
                     <input type='submit' className='highscore__button' />
                 </div>
             </form>

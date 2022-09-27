@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuid } from 'uuid';
 
-function Leaderboard({ player, setPlayer }) {
+function Leaderboard() {
 
     const [leaderboard, setLeaderboard] = useState([]);
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/leaderboard')
+            .get('https://seabound.herokuapp.com/leaderboard')
             .then(response => {
                 let leaderboardData = response.data;
                 let currentLeaderboard = []

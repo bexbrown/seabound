@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/images/Logo.png';
 
-function Header({ player, setPlayer }) {
+function Header() {
 
     const navigate = useNavigate();
     const urlLocation = window.location.pathname;

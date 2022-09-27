@@ -9,7 +9,7 @@ import OliveRidley from '../../assets/images/OliveRidley.png';
 import Leatherback from '../../assets/images/Leatherback.png';
 
 
-function GameStart({ player, setPlayer }) {
+function GameStart({ player }) {
 
     const [icon, setIcon] = useState(GreenSeaTurtle);
 

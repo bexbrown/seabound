@@ -35,6 +35,7 @@ const Turtle = styled.div`
     top: ${props => props.turtlePositionY}rem; 
     `;
 
+
 const Jellyfish = styled.div`
     background-image: url(${props => props.jellyfishImage});
     background-size: contain;
@@ -56,8 +57,8 @@ function Game({ player, setPlayer }) {
     let width = window.outerWidth;
 
     const [windowWidth, setWindowWidth] = useState(width);
-    const [screenToggle, setScreenToggle] = useState(false);
-    const [gameSize, setGameSize] = useState('');
+    // const [screenToggle, setScreenToggle] = useState(false);
+    // const [gameSize, setGameSize] = useState('');
 
     const [keyCode, setKeyCode] = useState(null);
     const [playerPosition, setPlayerPosition] = useState([]);
@@ -67,8 +68,6 @@ function Game({ player, setPlayer }) {
     const [playerImage, setPlayerImage] = useState(player);
 
     const [jellyfishPosition, setJellyfishPosition] = useState([]);
-    // const [jellyfishPositionTablet, setJellyfishPositionTablet] = useState([]);
-    // const [trashPositionsTablet, setTrashPositionsTablet] = useState([]);
     const [trashPositions, setTrashPositions] = useState([]);
 
     const [trashImages, setTrashImages] = useState([]);
@@ -96,7 +95,6 @@ function Game({ player, setPlayer }) {
         }
     }
 
-
     useEffect(() => {
         const turtleImages = [GreenSeaTurtle, Loggerhead, Leatherback, Flatback, HawksBill, KempsRidley, OliveRidley];
         const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
@@ -107,7 +105,7 @@ function Game({ player, setPlayer }) {
     //GET leaderboard data and setHighScore if true
     useEffect(() => {
         axios
-            .get('http://localhost:8080/leaderboard')
+            .get('https://seabound.herokuapp.com/leaderboard')
             .then(response => {
                 let leaderboard = response.data;
                 if (leaderboard[9].score < jellyfishCount) {
@@ -130,60 +128,6 @@ function Game({ player, setPlayer }) {
         setWindowWidth(width);
 
     }
-
-    // const getResizePositions = useCallback((trash, jellyfish) => {
-
-
-    //     if (windowWidth >= 768) {
-
-
-    //         let jellyfishOriginalPosition = jellyfish;
-    //         let trashOriginalPositions = trash;
-    //         let newJellyfishPosition = [jellyfishOriginalPosition[0] * 2, jellyfishOriginalPosition[1] * 2];
-    //         setJellyfishPosition(newJellyfishPosition);
-    //         let newTrashPositions = [];
-    //         trashOriginalPositions.map((trashPosition) => {
-    //             return newTrashPositions.push([trashPosition[0] * 2, trashPosition[1] * 2]);
-    //         })
-
-    //         setTrashPositions(newTrashPositions);
-    //         console.log(trashPositions);
-    //         setScreenToggle(false)
-
-    //     }
-    //     if (windowWidth < 768) {
-    //         console.log(trashPositions);
-    //         let jellyfishOriginalPosition = jellyfish;
-    //         let trashOriginalPositions = trash;
-    //         let newJellyfishPosition = [Math.floor(jellyfishOriginalPosition[0] / 2), Math.floor(jellyfishOriginalPosition[1] / 2)];
-    //         setJellyfishPosition(newJellyfishPosition);
-    //         let newTrashPositions = [];
-    //         trashOriginalPositions.map((trashPosition) => {
-    //             return newTrashPositions.push([trashPosition[0] / 2, trashPosition[1] / 2]);
-    //         })
-    //         console.log(trashPositions);
-    //         setTrashPositions(newTrashPositions);
-    //         setScreenToggle(false);
-    //     }
-    // }, [trashPositions, windowWidth])
-
-    // useEffect(() => {
-
-    //     if (screenToggle === true) {
-    //         getResizePositions();
-    //     }
-    // }, [screenToggle, getResizePositions])
-
-
-    // const toggleScreen = useCallback(() => {
-
-    //     if (gameSize === 'mobile' && windowWidth >= 768) {
-    //         setScreenToggle(true);
-    //     }
-    //     if (gameSize === 'tablet' && windowWidth < 768) {
-    //         setScreenToggle(true);
-    //     }
-    // }, [gameSize, windowWidth]);
 
     useEffect(() => {
 
@@ -228,12 +172,6 @@ function Game({ player, setPlayer }) {
             let newTrashPosition = getNewPosition();
             currentPositions.push(newTrashPosition);
             setTrashPositions(currentPositions);
-            // let newTabletPositions = [];
-            //         newTrashPosi.map((trashPosition) => {
-            //             return newTrashPositions.push([trashPosition[0] * 2, trashPosition[1] * 2]);
-            //         })
-
-            //         setTrashPositions(newTrashPositions);
             let currentTrashImages = trashImages;
             currentTrashImages.push(trash[Math.floor(Math.random() * trash.length)]);
             setTrashImages(currentTrashImages);
@@ -291,8 +229,6 @@ function Game({ player, setPlayer }) {
                 setJellyfishCount(count + 1);
                 let newJellyfishPosition = getNewPosition();
                 setJellyfishPosition(newJellyfishPosition);
-                // let newTabletPosition = [newJellyfishPosition[0] * 2, newJellyfishPosition[1] * 2];
-                // setJellyfishPosition(newTabletPosition);
                 getNewImage();
                 createTrash();
             }
@@ -350,7 +286,7 @@ function Game({ player, setPlayer }) {
             return () => clearInterval(playerMove);
         }
 
-    }, [playerPosition, playerDirection, gameSize, gameActive, gamePause, gameOver, jellyfishCount, jellyfishPosition, keyCode, trashPositions, windowWidth, screenToggle, playerSpeed, trashImages, getNewPosition])
+    }, [playerPosition, playerDirection, gameActive, gamePause, gameOver, jellyfishCount, jellyfishPosition, keyCode, trashPositions, windowWidth, playerSpeed, trashImages, getNewPosition])
 
     //navigate turtle with arrow keys & handle space bar press
     const handleKeyDown = useCallback((event) => {
@@ -425,7 +361,6 @@ function Game({ player, setPlayer }) {
         } else {
             setJellyfishPosition([Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]);
             setTrashPositions([[Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]]);
-
         }
         setTrashImages([trash[Math.floor(Math.random() * trash.length)]]);
         setJellyfishImage([jellyfish[Math.floor(Math.random() * jellyfish.length)]]);

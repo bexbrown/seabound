@@ -18,7 +18,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<HomePage player={player} setPlayer={setPlayer} />} />
-        <Route path='/leaderboard' element={<LeaderboardPage player={player} setPlayer={setPlayer} />} />
+        <Route path='/leaderboard' element={<LeaderboardPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Banner player={player} setPlayer={setPlayer} />

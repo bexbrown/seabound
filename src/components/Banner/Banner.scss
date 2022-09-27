@@ -34,7 +34,6 @@
         }
     }
 
-
     &__container {
         display: flex;
         justify-content: center;
@@ -51,7 +50,6 @@
             align-items: center;
             padding: 0.5rem;
         }
-
     }
 
     &__title {
@@ -74,9 +72,7 @@
             height: 2rem;
             width: 2rem;
         }
-
     }
-
 
     &__row {
         display: flex;
@@ -113,8 +109,6 @@
     &__data {
         font-size: 0.6rem;
         margin: 0;
-
-
     }
 
     &__span {
@@ -135,8 +129,6 @@
     &__arrow--left:hover {
         animation-name: scale;
         animation-duration: 1s;
-
-
     }
 
     &__arrow--right {
@@ -187,13 +179,6 @@
 
         to {
             transform: scale(1.5);
-
         }
-
     }
-
-
-
-
-
 }

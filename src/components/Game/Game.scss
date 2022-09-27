@@ -8,8 +8,6 @@
     color: $color-bg;
     height: 100%;
 
-    // &__iframe--waves 
-
     &__board {
         position: relative;
         width: 17rem;
@@ -209,7 +207,6 @@
     &__toggle--wrap {
         display: flex;
         align-items: center;
-
     }
 
     &__toggle--text {
@@ -218,6 +215,5 @@
         @include tablet {
             margin-left: 1rem;
         }
-
     }
 }

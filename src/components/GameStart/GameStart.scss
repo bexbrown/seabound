@@ -13,30 +13,12 @@
     align-items: center;
     background-color: $color-card;
     border-radius: 6px;
-    // background: repeating-linear-gradient(-45deg, $color-bg, $color-water, $color-card, $color-text);
-    // background-size: 350% 350%;
-    // animation: gradient 20s ease-in-out infinite;
 
     @include tablet {
         text-align: center;
         width: 34rem;
         height: 34rem;
     }
-
-    // @keyframes gradient {
-    //     0% {
-    //         background-position: 0% 50%;
-    //     }
-
-    //     50% {
-    //         background-position: 100% 50%;
-    //     }
-
-    //     100% {
-    //         background-position: 0% 50%;
-    //     }
-    // }
-
 
     &__title {
         text-transform: uppercase;
