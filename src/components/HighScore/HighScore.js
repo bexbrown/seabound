@@ -39,10 +39,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     }
 
     function handleInputChange(event) {
-        if (event.target.value.length < 2) {
-            setFormInvalid(true);
-        }
-        if (event.target.value.length > 20) {
+        if (event.target.value.length < 2 || event.target.value.length > 20) {
             setFormInvalid(true);
         }
         else {
