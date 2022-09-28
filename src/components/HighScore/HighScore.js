@@ -14,13 +14,13 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     //post high score to leaderboard
     const postLeaderboardScore = (postBody) => {
         axios
-            .post('https://seabound.herokuapp.com//leaderboard', postBody)
+            .post('http://localhost:8080/leaderboard', postBody)
             .then(response => {
                 let newScore = response.data;
                 console.log(newScore);
 
                 axios
-                    .get('https://seabound.herokuapp.com//leaderboard')
+                    .get('http://localhost:8080/leaderboard')
                     .then(leaderboardDataResponse => {
                         console.log(leaderboardDataResponse);
                         let leaderboardData = leaderboardDataResponse.data;

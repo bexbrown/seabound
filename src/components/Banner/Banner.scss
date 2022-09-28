@@ -20,6 +20,10 @@
         @include tablet {
             width: 34rem;
         }
+
+        @include desktop {
+            width: 51rem;
+        }
     }
 
     &__wrapper {
@@ -31,6 +35,10 @@
 
         @include tablet {
             width: 34rem;
+        }
+
+        @include desktop {
+            width: 51rem;
         }
     }
 
@@ -50,6 +58,10 @@
             align-items: center;
             padding: 0.5rem;
         }
+
+        @include desktop {
+            width: 35rem;
+        }
     }
 
     &__title {
@@ -60,6 +72,10 @@
         @include tablet {
             font-size: 0.75rem;
             text-align: center;
+        }
+
+        @include desktop {
+            font-size: 1rem;
         }
     }
 

@@ -9,6 +9,10 @@
         padding: 1rem 0.5rem;
     }
 
+    @include desktop {
+        // padding: 1.5rem 0.5;
+    }
+
     &__container {
         display: flex;
         flex-direction: column;
@@ -21,6 +25,11 @@
             flex-direction: row;
             justify-content: space-between;
         }
+
+        @include desktop {
+            width: 51rem;
+        }
+
     }
 
     &__row {
@@ -32,6 +41,10 @@
         width: 9rem;
         height: 100%;
         cursor: pointer;
+
+        @include desktop {
+            width: 12rem;
+        }
     }
 
     &__navbar {
@@ -45,12 +58,20 @@
             padding-top: 0;
             justify-content: space-between;
         }
+
+        @include desktop {
+            width: 35%;
+        }
     }
 
     &__navlink {
         text-decoration: none;
         text-transform: uppercase;
         cursor: pointer;
+
+        @include desktop {
+            font-size: 1.25rem;
+        }
     }
 
     &__navlink--active {

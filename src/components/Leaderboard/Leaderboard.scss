@@ -5,8 +5,8 @@
     margin: 0 1.5rem;
     margin-bottom: 43.19px;
 
-    @include tablet {
-        // margin-bottom: 40px;
+    @include desktop {
+        margin-bottom: 55px;
     }
 
     &__container {
@@ -25,6 +25,11 @@
         @include tablet {
             width: 34rem;
             height: 34rem;
+        }
+
+        @include desktop {
+            width: 51rem;
+            height: 51rem;
         }
     }
 
@@ -54,6 +59,10 @@
         @include tablet {
             font-size: 1rem;
         }
+
+        @include desktop {
+            font-size: 1.25rem;
+        }
     }
 
     &__rank {
@@ -74,6 +83,10 @@
 
         @include tablet {
             font-size: 1rem;
+        }
+
+        @include desktop {
+            font-size: 1.25rem;
         }
     }
 

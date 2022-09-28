@@ -20,6 +20,13 @@
         height: 34rem;
     }
 
+    @include desktop {
+        width: 51rem;
+        height: 51rem;
+        margin-bottom: 16px;
+    }
+
+
     &__title {
         text-transform: uppercase;
         text-decoration: underline;
@@ -46,6 +53,12 @@
             width: 2rem;
             height: 2rem;
             margin-right: 0.75rem;
+        }
+
+        @include desktop {
+            height: 3rem;
+            width: 3rem;
+
         }
     }
 

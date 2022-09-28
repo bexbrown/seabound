@@ -52,13 +52,8 @@ const Trash = styled.div`
 
 function Game({ player, setPlayer }) {
 
-
-
     let width = window.outerWidth;
-
     const [windowWidth, setWindowWidth] = useState(width);
-    // const [screenToggle, setScreenToggle] = useState(false);
-    // const [gameSize, setGameSize] = useState('');
 
     const [keyCode, setKeyCode] = useState(null);
     const [playerPosition, setPlayerPosition] = useState([]);
@@ -105,7 +100,7 @@ function Game({ player, setPlayer }) {
     //GET leaderboard data and setHighScore if true
     useEffect(() => {
         axios
-            .get('https://seabound.herokuapp.com/leaderboard')
+            .get('http://localhost:8080/leaderboard')
             .then(response => {
                 let leaderboard = response.data;
                 if (leaderboard[9].score < jellyfishCount) {
@@ -120,22 +115,24 @@ function Game({ player, setPlayer }) {
     }, [gameOver, jellyfishCount])
 
     //set window size and resize on window resize
-
     window.onresize = getWindowSize;
-    function getWindowSize() {
 
+    function getWindowSize() {
         let width = window.outerWidth;
         setWindowWidth(width);
-
     }
 
     useEffect(() => {
 
-        if (windowWidth >= 768) {
+        if (windowWidth >= 1920) {
+            setPlayerSpeed(43.75)
+            setPlayerPosition([24, 24]);
+        }
+        if (windowWidth >= 768 && windowWidth < 1920) {
             setPlayerSpeed(87.5);
             setPlayerPosition([16, 16]);
-        } else {
-
+        }
+        if (windowWidth < 768) {
             setPlayerSpeed(175);
             setPlayerPosition([8, 8]);
         }
@@ -153,12 +150,18 @@ function Game({ player, setPlayer }) {
                 }
             })
         }
-        if (windowWidth < 768) {
-            let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
+        if (windowWidth >= 1920) {
+            let newPosition = [Math.floor(Math.random() * 48), Math.floor(Math.random() * 48)];
             checkPosition(newPosition);
             return newPosition;
-        } else {
+        }
+        if (windowWidth >= 768 && windowWidth < 1920) {
             let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
+            checkPosition(newPosition);
+            return newPosition;
+        }
+        if (windowWidth < 768) {
+            let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
             checkPosition(newPosition);
             return newPosition;
         }
@@ -176,28 +179,6 @@ function Game({ player, setPlayer }) {
             currentTrashImages.push(trash[Math.floor(Math.random() * trash.length)]);
             setTrashImages(currentTrashImages);
         };
-
-        // function getNewPosition() {
-        //     if (windowWidth < 768) {
-        //         let newPosition = [Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)];
-        //         checkPosition(newPosition);
-        //         return newPosition;
-        //     } else {
-        //         let newPosition = [Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)];
-        //         checkPosition(newPosition);
-        //         return newPosition;
-        //     }
-        // };
-
-        // function checkPosition(newPosition) {
-        //     trashPositions.map((trash) => {
-        //         if (newPosition === trash || newPosition === playerPosition || newPosition === jellyfishPosition) {
-        //             return getNewPosition();
-        //         } else {
-        //             return newPosition;
-        //         }
-        //     })
-        // };
 
         function getNewImage() {
             const jellyfishImages = [JellyfishImage1, JellyfishImage2, JellyfishImage3, JellyfishImage4];
@@ -243,31 +224,40 @@ function Game({ player, setPlayer }) {
             })
 
             //check for turtle out of bounds
-            if (windowWidth >= 768) {
+
+            if (windowWidth >= 1920) {
+                if (playerPosition[0] < 0
+                    || playerPosition[0] > 48
+                    || playerPosition[1] < 0
+                    || playerPosition[1] > 48) {
+                    setGameOver(true);
+                    setGameOverReason('bounds')
+                }
+            }
+            if (windowWidth >= 768 && windowWidth < 1920) {
                 if (playerPosition[0] < 0
                     || playerPosition[0] > 32
                     || playerPosition[1] < 0
                     || playerPosition[1] > 32) {
                     setGameOver(true);
                     setGameOverReason('bounds');
-                    return;
                 }
-            } else {
+            }
+            if (windowWidth < 768) {
                 if (playerPosition[0] < 0
                     || playerPosition[0] > 16
                     || playerPosition[1] < 0
                     || playerPosition[1] > 16) {
                     setGameOver(true);
                     setGameOverReason('bounds');
-                    return;
                 }
-
             }
 
             //set interval for turtle movement
             let playerMove = setInterval(function () { playerMovement() }, playerSpeed)
             let x = playerPosition[0];
             let y = playerPosition[1];
+
             function playerMovement() {
 
                 if (playerDirection === 'LEFT') {
@@ -294,10 +284,14 @@ function Game({ player, setPlayer }) {
         //game resets
         function gameRestart() {
             let position = [];
-            if (windowWidth < 768) {
-                position = [8, 8]
-            } else {
+            if (windowWidth >= 1920) {
+                position = [24, 24];
+            }
+            if (windowWidth >= 768 & windowWidth < 1920) {
                 position = [16, 16];
+            }
+            if (windowWidth < 768) {
+                position = [8, 8];
             }
             setKeyCode(null);
             setPlayerPosition(position);
@@ -355,10 +349,14 @@ function Game({ player, setPlayer }) {
     useEffect(() => {
         let trash = [BagImage, BottleImage, RingsImage, CupImage];
         let jellyfish = [JellyfishImage1, JellyfishImage2, JellyfishImage3, JellyfishImage4];
+        if (windowWidth >= 1920) {
+            setJellyfishPosition([Math.floor(Math.random() * 48), Math.floor(Math.random() * 48)]);
+            setTrashPositions([[Math.floor(Math.random() * 48), Math.floor(Math.random() * 48)]]);
+        }
         if (windowWidth >= 768) {
             setJellyfishPosition([Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]);
             setTrashPositions([[Math.floor(Math.random() * 32), Math.floor(Math.random() * 32)]]);
-        } else {
+        } if (windowWidth < 768) {
             setJellyfishPosition([Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]);
             setTrashPositions([[Math.floor(Math.random() * 16), Math.floor(Math.random() * 16)]]);
         }

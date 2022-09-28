@@ -18,4 +18,10 @@
         height: 34rem;
         width: 34rem;
     }
+
+    @include desktop {
+        height: 51rem;
+        width: 51rem;
+        margin-bottom: 16px;
+    }
 }

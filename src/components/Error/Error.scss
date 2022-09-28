@@ -20,5 +20,11 @@
             width: 34rem;
             height: 34rem;
         }
+
+        @include desktop {
+            height: 51rem;
+            width: 51rem;
+            margin-bottom: 55px;
+        }
     }
 }

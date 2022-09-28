@@ -7,7 +7,6 @@ import NotFoundPage from './pages/NotFoundPage';
 import Banner from './components/Banner/Banner';
 import { useState } from 'react';
 
-
 function App() {
 
   const [player, setPlayer] = useState('GreenSeaTurtle');

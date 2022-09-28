@@ -9,7 +9,7 @@ function Leaderboard() {
 
     useEffect(() => {
         axios
-            .get('https://seabound.herokuapp.com/leaderboard')
+            .get('http://localhost:8080/leaderboard')
             .then(response => {
                 let leaderboardData = response.data;
                 let currentLeaderboard = []

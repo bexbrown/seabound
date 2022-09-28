@@ -25,18 +25,23 @@ function Banner({ player, setPlayer }) {
 
     function handleLeftClick() {
         const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
-        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawk's Bill`, `Kemp's Ridley`, 'Olive Ridley']
+        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawksbill`, `Kemp's Ridley`, 'Olive Ridley']
+
+
         let index = turtleNames.indexOf(player);
         if (index === 0) {
             index = turtleNames.length;
         }
         setPlayer(turtleNames[index - 1]);
-        setTurtleName(nameStrings[index - 1])
+
+        setTurtleName(nameStrings[index - 1]);
+
     }
 
     function handleRightClick() {
         const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
-        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawk's Bill`, `Kemp's Ridley`, 'Olive Ridley']
+        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawksbill`, `Kemp's Ridley`, 'Olive Ridley'];
+
 
         let index = turtleNames.indexOf(player);
         if (index === turtleNames.length - 1) {
@@ -48,7 +53,7 @@ function Banner({ player, setPlayer }) {
 
     function handleBannerClick() {
         const turtleNames = ['GreenSeaTurtle', 'Loggerhead', 'Leatherback', 'FlatBack', 'HawksBill', 'KempsRidley', 'OliveRidley'];
-        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawk's Bill`, `Kemp's Ridley`, 'Olive Ridley']
+        const nameStrings = ['Green Sea Turtle', 'Loggerhead', 'Leatherback', 'Flatback', `Hawksbill`, `Kemp's Ridley`, 'Olive Ridley']
 
         let index = turtleNames.indexOf(player);
         if (index === turtleNames.length - 1) {
