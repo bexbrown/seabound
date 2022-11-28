@@ -100,7 +100,7 @@ function Game({ player, setPlayer }) {
     //GET leaderboard data and setHighScore if true
     useEffect(() => {
         axios
-            .get('http://localhost:8080/leaderboard')
+            .get('https://seabound.herokuapp.com/leaderboard')
             .then(response => {
                 let leaderboard = response.data;
                 if (leaderboard[9].score < jellyfishCount) {
