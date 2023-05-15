@@ -63,7 +63,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
         postLeaderboardScore(postBody);
 
         navigate('/leaderboard');
-        // window.location.pathname = '/leaderboard';
+        window.location.pathname = '/leaderboard';
     }
 
     return (
