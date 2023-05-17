@@ -22,7 +22,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
                 // emptyCache();
 
                 axios
-                    .get('https://seabound.herokuapp.com/leaderboard/')
+                    .get('https://seabound.herokuapp.com/leaderboard/' + '?nocache=' + new Date().getTime())
                     .then(leaderboardDataResponse => {
                         console.log(leaderboardDataResponse);
                         let leaderboardData = leaderboardDataResponse.data;
