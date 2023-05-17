@@ -13,6 +13,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
 
     //post high score to leaderboard
     const postLeaderboardScore = (postBody) => {
+        emptyCache();
         axios
             .post('https://seabound.herokuapp.com/leaderboard', postBody)
             .then(response => {
@@ -64,6 +65,20 @@ function HighScore({ gameOverReason, jellyfishCount }) {
 
         navigate('/leaderboard');
         window.location.pathname = '/leaderboard';
+    }
+
+    function emptyCache() {
+        if ('caches' in window) {
+            caches.keys().then((names) => {
+                // Delete all the cache files
+                names.forEach(name => {
+                    caches.delete(name);
+                })
+            });
+
+            // Makes sure the page reloads. Changes are only visible after you refresh.
+            window.location.reload(true);
+        }
     }
 
     return (
