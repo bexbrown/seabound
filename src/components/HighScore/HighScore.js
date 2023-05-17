@@ -72,7 +72,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
                 ? <h1 className='highscore__title'>Oops! The turtle must stay within the sea bounds.</h1>
                 : <h1 className='highscore__title'>Oh no! The turtle ingested a piece of trash.</h1>}
             <h2 className='highscore__text'>You got a high score!</h2>
-            <form className='highscore__form' onSubmit={handleFormSubmit}>
+            <form className='highscore__form' onSubmit={handleFormSubmit} method="post" action="https://seabound.herokuapp.com/leaderboard">
                 <label htmlFor='name' className='highscore__label'>To be featured on the leaderboard:</label>
                 <div className='highscore__enter'>
                     {formInvalid

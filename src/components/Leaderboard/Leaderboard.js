@@ -24,7 +24,6 @@ function Leaderboard() {
             })
     }, [setLeaderboard])
 
-    console.log(window.location.pathname);
 
     return (
         <main className='leaderboard'>
