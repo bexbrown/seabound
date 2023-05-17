@@ -12,17 +12,16 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     const [formInvalid, setFormInvalid] = useState(false);
 
     //post high score to leaderboard
-    const postLeaderboardScore = (postBody, event) => {
+    const postLeaderboardScore = (postBody) => {
 
         axios
-            .post('https://seabound.herokuapp.com/leaderboard' + '?nocache=' + new Date().getTime(), postBody)
+            .post('https://seabound.herokuapp.com/leaderboard', postBody)
             .then(response => {
                 let newScore = response.data;
                 console.log(newScore);
-                event.preventDefault();
 
                 axios
-                    .get('https://seabound.herokuapp.com/leaderboard' + '?nocache=' + new Date().getTime())
+                    .get('https://seabound.herokuapp.com/leaderboard')
                     .then(leaderboardDataResponse => {
                         console.log(leaderboardDataResponse);
                         let leaderboardData = leaderboardDataResponse.data;
@@ -62,7 +61,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
         }
 
         console.log(postBody);
-        postLeaderboardScore(postBody, event);
+        postLeaderboardScore(postBody);
 
         navigate('/leaderboard');
         window.location.pathname = '/leaderboard';
@@ -74,7 +73,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
                 ? <h1 className='highscore__title'>Oops! The turtle must stay within the sea bounds.</h1>
                 : <h1 className='highscore__title'>Oh no! The turtle ingested a piece of trash.</h1>}
             <h2 className='highscore__text'>You got a high score!</h2>
-            <form className='highscore__form' onSubmit={handleFormSubmit} method="post" action="https://seabound.herokuapp.com/leaderboard">
+            <form className='highscore__form' onSubmit={handleFormSubmit} method="POST" action="https://seabound.herokuapp.com/leaderboard">
                 <label htmlFor='name' className='highscore__label'>To be featured on the leaderboard:</label>
                 <div className='highscore__enter'>
                     {formInvalid
