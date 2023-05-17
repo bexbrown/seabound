@@ -12,13 +12,14 @@ function HighScore({ gameOverReason, jellyfishCount }) {
     const [formInvalid, setFormInvalid] = useState(false);
 
     //post high score to leaderboard
-    const postLeaderboardScore = (postBody) => {
+    const postLeaderboardScore = (postBody, event) => {
 
         axios
             .post('https://seabound.herokuapp.com/leaderboard' + '?nocache=' + new Date().getTime(), postBody)
             .then(response => {
                 let newScore = response.data;
                 console.log(newScore);
+                event.preventDefault();
 
                 axios
                     .get('https://seabound.herokuapp.com/leaderboard' + '?nocache=' + new Date().getTime())
@@ -61,7 +62,7 @@ function HighScore({ gameOverReason, jellyfishCount }) {
         }
 
         console.log(postBody);
-        postLeaderboardScore(postBody);
+        postLeaderboardScore(postBody, event);
 
         navigate('/leaderboard');
         window.location.pathname = '/leaderboard';
